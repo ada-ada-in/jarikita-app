@@ -1,0 +1,87 @@
+# AUTH
+
+# POST http://localhost:8080/api/v1/auth/register
+# Content-Type: application/json
+
+# {
+#     "username": "users",
+#     "email": "users@example.com",
+#     "alamat": "123 Main St",
+#     "no_handphone": "123456789101112",
+#     "avatar_url": "http://example.com/avatar.jpg",
+#     "role": "user",
+#     "password": "password",
+#     "confirm_password": "password"
+# }
+
+# Users
+
+# GET http://localhost:8080/api/v1/users
+# Content-Type: application/json
+
+# GET http://localhost:8080/api/v1/users/1
+# Content-Type: application/json
+
+# PUT http://localhost:8080/api/v1/users/1
+# Content-Type: application/json
+
+# {
+#     "username": "users",
+#     "email": "users@example.com",
+#     "alamat": "123 Main St",
+#     "no_handphone": "123456789101112",
+#     "avatar_url": "http://example.com/avatar.jpg",
+#     "role": "user",
+#     "password": "password",
+#     "confirm_password": "password"
+# }
+
+# DELETE http://localhost:8080/api/v1/users/1
+
+# Log
+
+# POST http://localhost:8080/api/v1/log
+# Content-Type: application/json
+
+# {
+#     "deskripsi": "Log entry description",
+#     "email": "user@example.com",
+#     "no_handphone": "123456789101112" 
+# }
+
+# GET http://localhost:8080/api/v1/log
+# Content-Type: application/json
+
+# GET http://localhost:8080/api/v1/log/1
+# Content-Type: application/json
+
+# PUT http://localhost:8080/api/v1/log/1
+# Content-Type: application/json
+
+# {
+#     "deskripsi": "Updated log entry description",
+#     "email": "user@example.com",
+#     "no_handphone": "0123456789101112"
+# }
+
+# Lokasi
+
+# POST http://localhost:8080/api/v1/lokasi
+# Content-Type: application/json
+
+# {
+#     "lokasi": "Location description"
+# }
+
+# GET http://localhost:8080/api/v1/lokasi
+# Content-Type: application/json
+
+# GET http://localhost:8080/api/v1/lokasi/1
+# Content-Type: application/json
+
+# PUT http://localhost:8080/api/v1/lokasi/1
+# Content-Type: application/json
+
+# {
+#     "lokasi": "Updated location description"
+# }

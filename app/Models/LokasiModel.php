@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class LokasiModel extends Model
 {
-    protected $table            = 'users';
+    protected $table            = 'lokasi';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

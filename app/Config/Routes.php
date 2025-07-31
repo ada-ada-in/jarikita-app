@@ -28,3 +28,44 @@
         $routes->get('login', 'PagesController::login', ['as' => 'login']);
         $routes->get('register', 'PagesController::register', ['as' => 'register']);
     });
+    
+
+
+    // API
+    $routes->group('api/v1', static function($routes) {
+        $routes->group('auth', static function($routes) {
+            $routes->post('login', 'Api\V1\AuthController::login', ['as' => 'api.auth.login']);
+            $routes->post('register', 'Api\V1\AuthController::register', ['as' => 'api.auth.register']);
+            $routes->post('logout', 'Api\V1\AuthController::logout', ['as' => 'api.auth.logout']);
+        });
+
+        $routes->group('users', static function($routes) {
+            $routes->get('', 'Api\V1\UsersController::getDataUser', ['as' => 'api.users.getDataUser']);
+            $routes->get('profile', 'Api\V1\UsersController::getDataUserProfile', ['as' => 'api.users.getDataUserProfile']);
+            $routes->put('profile/update', 'Api\V1\UsersController::getDataUserProfileById', ['as' => 'api.users.getDataUserProfileById']);
+            $routes->get('countuser', 'Api\V1\UsersController::countUser', ['as' => 'api.users.countUser']);
+            $routes->get('(:num)', 'Api\V1\UsersController::getDataUserById/$1', ['as' => 'api.users.getDataUserById']);
+            $routes->delete('(:num)', 'Api\V1\UsersController::deleteDataUserById/$1', ['as' => 'api.userss.deleteDataUserById']);
+            $routes->put('(:num)', 'Api\V1\UsersController::updateDataUserById/$1', ['as' => 'api.users.updateDataUserById']);
+        });
+
+        $routes->group('log', static function($routes) {
+            $routes->post('', 'Api\V1\LogController::createLog', ['as' => 'api.log.createLog']);
+            $routes->get('', 'Api\V1\LogController::getDataLog', ['as' => 'api.log.getDataLog']);
+            $routes->get('countlog', 'Api\V1\LogController::countLog', ['as' => 'api.log.countLog']);
+            $routes->get('(:num)', 'Api\V1\LogController::getDataLogById/$1', ['as' => 'api.log.getDataLogById']);
+            $routes->delete('(:num)', 'Api\V1\LogController::deleteDataLogById/$1', ['as' => 'api.log.deleteDataLogById']);
+            $routes->put('(:num)', 'Api\V1\LogController::updateDataLogById/$1', ['as' => 'api.log.updateDataLogById']);
+        });
+
+
+         $routes->group('lokasi', static function($routes) {
+            $routes->post('', 'Api\V1\LokasiController::createLokasi', ['as' => 'api.lokasi.createLokasi']);
+            $routes->get('', 'Api\V1\LokasiController::getDataLokasi', ['as' => 'api.lokasi.getDataLokasi']);
+            $routes->get('countlokasi', 'Api\V1\LokasiController::countLokasi', ['as' => 'api.lokasi.countLokasi']);
+            $routes->get('(:num)', 'Api\V1\LokasiController::getDataLokasiById/$1', ['as' => 'api.lokasi.getDataLokasiById']);
+            $routes->delete('(:num)', 'Api\V1\LokasiController::deleteDataLokasiById/$1', ['as' => 'api.lokasi.deleteDataLokasiById']);
+            $routes->put('(:num)', 'Api\V1\LokasiController::updateDataLokasiById/$1', ['as' => 'api.lokasi.updateDataLokasiById']);
+        });
+
+    });
