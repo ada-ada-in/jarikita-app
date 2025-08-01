@@ -68,4 +68,13 @@
             $routes->put('(:num)', 'Api\V1\LokasiController::updateDataLokasiById/$1', ['as' => 'api.lokasi.updateDataLokasiById']);
         });
 
+         $routes->group('review', static function($routes) {
+            $routes->post('', 'Api\V1\ReviewController::createReview', ['as' => 'api.review.createReview']);
+            $routes->get('', 'Api\V1\ReviewController::getDataReview', ['as' => 'api.review.getDataReview']);
+            $routes->get('countreview', 'Api\V1\ReviewController::countReview', ['as' => 'api.review.countReview']);
+            $routes->get('(:num)', 'Api\V1\ReviewController::getDataReviewById/$1', ['as' => 'api.review.getDataReviewById']);
+            $routes->delete('(:num)', 'Api\V1\ReviewController::deleteDataReviewById/$1', ['as' => 'api.review.deleteDataReviewById']);
+            $routes->put('(:num)', 'Api\V1\ReviewController::updateDataReviewById/$1', ['as' => 'api.review.updateDataReviewById']);
+        });
+
     });
