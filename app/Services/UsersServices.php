@@ -102,6 +102,13 @@ class UsersServices {
         }
 
         $userData = new UsersModel();
+
+        $user = $userData->find($id);
+
+        $imagePath = FCPATH . $user['avatar_url']; 
+         if (file_exists($imagePath) && is_file($imagePath)) {
+             unlink($imagePath);
+         }
     
         $data = $userData->delete($id);
 

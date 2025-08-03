@@ -71,10 +71,19 @@
          $routes->group('review', static function($routes) {
             $routes->post('', 'Api\V1\ReviewController::createReview', ['as' => 'api.review.createReview']);
             $routes->get('', 'Api\V1\ReviewController::getDataReview', ['as' => 'api.review.getDataReview']);
-            $routes->get('countreview', 'Api\V1\ReviewController::countReview', ['as' => 'api.review.countReview']);
+            $routes->get('countreview', 'Api\V1\ReviewController::countReview',     ['as' => 'api.review.countReview']);
             $routes->get('(:num)', 'Api\V1\ReviewController::getDataReviewById/$1', ['as' => 'api.review.getDataReviewById']);
             $routes->delete('(:num)', 'Api\V1\ReviewController::deleteDataReviewById/$1', ['as' => 'api.review.deleteDataReviewById']);
             $routes->put('(:num)', 'Api\V1\ReviewController::updateDataReviewById/$1', ['as' => 'api.review.updateDataReviewById']);
+        });
+
+         $routes->group('layanan', static function($routes) {
+            $routes->post('', 'Api\V1\LayananController::createLayanan', ['as' => 'api.layanan.createLayanan']);
+            $routes->get('', 'Api\V1\LayananController::getDataLayanan', ['as' => 'api.layanan.getDataLayanan']);
+            $routes->get('countlayanan', 'Api\V1\LayananController::countLayanan',     ['as' => 'api.layanan.countLayanan']);
+            $routes->get('(:num)', 'Api\V1\LayananController::getDataLayananById/$1', ['as' => 'api.layanan.getDataLayananById']);
+            $routes->delete('(:num)', 'Api\V1\LayananController::deleteDataLayananById/$1', ['as' => 'api.layanan.deleteDataLayananById']);
+            $routes->put('(:num)', 'Api\V1\LayananController::updateDataLayananById/$1', ['as' => 'api.layanan.updateDataLayananById']);
         });
 
     });

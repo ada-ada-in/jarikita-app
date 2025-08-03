@@ -15,13 +15,13 @@ class LayananServices {
     public function createLayananServices(array $data){
 
     $rules = [
-            'users_id'    => [
-                'label' => 'users_id',
-                'rules' => 'required|min_length[11]'
+            'user_id'    => [
+                'label' => 'user_id',
+                'rules' => 'required'
             ],
             'lokasi_id'    => [
                 'label' => 'lokasi_id',
-                'rules' => 'required|min_length[11]'
+                'rules' => 'required'
             ],
             'nama_jasa'   => [
                 'label' => 'nama_jasa',
@@ -29,10 +29,6 @@ class LayananServices {
             ],
             'alamat'   => [
                 'label' => 'alamat',
-                'rules' => 'required'
-            ],
-            'image_url'   => [
-                'label' => 'image_url',
                 'rules' => 'required'
             ],
             'deskripsi'   => [
@@ -52,7 +48,7 @@ class LayananServices {
         }
 
         $this->layananJasaModel->insert([
-            'users_id'    => $data['users_id'],
+            'user_id'    => $data['user_id'],
             'lokasi_id'       => $data['lokasi_id'],
             'nama_jasa' => $data['nama_jasa'],
             'alamat' => $data['alamat'],
@@ -118,6 +114,13 @@ class LayananServices {
         }
 
         $LayananData = new LayananJasaModel();
+
+        $layanan = $LayananData->find($id);
+
+        $imagePath = FCPATH . $layanan['image_url']; 
+         if (file_exists($imagePath) && is_file($imagePath)) {
+             unlink($imagePath);
+         }
     
         $data = $LayananData->delete($id);
 
@@ -152,7 +155,7 @@ class LayananServices {
         }
 
         $updateData = [
-            'users_id'    => $data['users_id'] ?? $existingLayanan['users_id'],
+            'user_id'    => $data['user_id'] ?? $existingLayanan['user_id'],
             'lokasi_id'   => $data['lokasi_id'] ?? $existingLayanan['lokasi_id'],
             'nama_jasa'   => $data['nama_jasa'] ?? $existingLayanan['nama_jasa'],
             'alamat'   => $data['alamat'] ?? $existingLayanan['alamat'],

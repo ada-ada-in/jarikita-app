@@ -90,6 +90,7 @@ class UsersController extends ResourceController {
             $deletedData = $this->userServices->deleteDataUserByIdServices($id);
 
             session()->setFlashdata('success', 'User berhasil dihapus!');
+            
     
             return $this->respondDeleted([
                 'status'  => true,
