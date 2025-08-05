@@ -19,10 +19,6 @@ class LogServices {
                 'label' => 'deskripsi',
                 'rules' => 'required|min_length[2]'
             ],
-            'email'       => [
-                'label' => 'email',
-                'rules' => 'required|valid_email|is_unique[users.email]'
-            ],
             'no_handphone'   => [
                 'label' => 'no_handphone',
                 'rules' => 'required|min_length[12]'

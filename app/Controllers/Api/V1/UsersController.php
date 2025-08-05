@@ -110,17 +110,33 @@ class UsersController extends ResourceController {
     public function updateDataUserById($id)
     {
         try {
-            $data = $this->request->getJSON(true);
-    
-            if (!$data || empty($data)) {
+            $image = $this->request->getFile('image');
+            $data = $this->request->getPost();
+
+            if (!$image->isValid()) {
                 return $this->fail([
-                    'status'  => false,
-                    'message' => 'No data provided for update'
+                    'error' => 'Invalid file.',
+                    'debug' => $image->getError()
                 ], 400);
             }
 
-        
+            if (!file_exists($image->getTempName())) {
+                return $this->fail([
+                    'error' => 'Temporary file missing.',
+                    'debug' => $image->getTempName()
+                ], 400);
+            }
+
+            $imageName = $image->getRandomName();
+            $image->move(FCPATH . 'uploads/', $imageName);
     
+            if (empty($data)) {
+                return $this->fail([
+                    'error' => 'No data received.', 'debug' => $this->request->getBody()
+                ]);
+            }
+
+            $data['avatar_url'] = 'uploads/' . $imageName;   
             $updatedData = $this->userServices->updateDataByUserIdServices($id, $data);
 
             session()->setFlashdata('success', 'User berhasil diupdate!');

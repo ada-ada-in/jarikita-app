@@ -46,7 +46,7 @@
             $routes->get('countuser', 'Api\V1\UsersController::countUser', ['as' => 'api.users.countUser']);
             $routes->get('(:num)', 'Api\V1\UsersController::getDataUserById/$1', ['as' => 'api.users.getDataUserById']);
             $routes->delete('(:num)', 'Api\V1\UsersController::deleteDataUserById/$1', ['as' => 'api.userss.deleteDataUserById']);
-            $routes->put('(:num)', 'Api\V1\UsersController::updateDataUserById/$1', ['as' => 'api.users.updateDataUserById']);
+            $routes->post('(:num)', 'Api\V1\UsersController::updateDataUserById/$1', ['as' => 'api.users.updateDataUserById']);
         });
 
         $routes->group('log', static function($routes) {

@@ -20,19 +20,19 @@
 						</li>
 						<li class="dropdown">
 							<a href="<?= url_to('lokasi') ?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-textarea-resize"></span
+								<span class="micon bi bi-geo-alt-fill"></span
 								><span class="mtext">Lokasi</span>
 							</a>
 						</li>
 						<li class="dropdown">
 							<a href="<?= url_to('log') ?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-file-earmark-text"></span
+								<span class="micon bi bi-chat-dots"></span
 								><span class="mtext">Log Info</span>
 							</a>
 						</li>
 						<li class="dropdown">
 							<a href="<?= url_to('jasa') ?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-table"></span
+								<span class="micon bi bi-archive"></span
 								><span class="mtext">Penyedia Jasa</span>
 							</a>
 						</li>
