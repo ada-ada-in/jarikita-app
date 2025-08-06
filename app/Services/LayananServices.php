@@ -69,7 +69,12 @@ class LayananServices {
     {
         
         $LayananData = new LayananJasaModel();
-        $data = $LayananData->orderBy('created_at', 'DESC')->findAll();
+        $data = $LayananData
+        ->select('layanan_jasa.*, users.username as username_user, users.email as email_user, users.alamat as alamat_user, users.no_handphone as no_handphone_user')
+        ->join('users', 'users.id = layanan_jasa.user_id', 'left')
+        ->select('layanan_jasa.*, lokasi.lokasi as nama_lokasi')
+        ->join('lokasi', 'lokasi.id = layanan_jasa.lokasi_id', 'left')
+        ->orderBy('created_at', 'DESC')->findAll();
 
         if(empty($data)){
             return [
