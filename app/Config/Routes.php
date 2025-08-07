@@ -7,7 +7,7 @@
      * @var RouteCollection $routes
      */
 
-    // admin
+    // admin pages
     $routes->group('admin', static function($routes) {
         $routes->get('dashboard', 'PagesController::admin', ['as' => 'admin']);
         $routes->get('log', 'PagesController::log', ['as' => 'log']);
@@ -18,8 +18,10 @@
         $routes->get('profile', 'PagesController::profile', ['as' => 'profile']);
     });
 
+    // users pages
     $routes->group('/', static function($routes){
         $routes->get('', 'PagesController::main', ['as' => 'main']);
+        $routes->get('profile', 'PagesController::profilejasa', ['as' => 'profilejasa']);
     });
 
 

@@ -36,6 +36,11 @@ class PagesController extends BaseController
         return view('userPages/main');
     }
 
+    public function profilejasa(): string
+    {
+        return view('userPages/profile');
+    }
+
 
     // auth
     public function login(): string
