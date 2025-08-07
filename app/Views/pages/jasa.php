@@ -24,7 +24,7 @@
 								<div class="form-group">
 									<input class="form-control" id="searchinput" placeholder="Cari....." type="text" />
 								</div>
-								<button class="btn btn-primary " data-toggle="modal" data-target="#addlayananmodal" >+</button>
+								<button class="btn btn-primary " data-toggle="modal" data-target="#addjasamodal" >+</button>
 							</div>
                         </div>
 
@@ -55,6 +55,8 @@
 				</div>
 			</div>
 
+<?= view('pages/modals/jasa/add-jasa-modals') ?>
+<?= view('pages/modals/jasa/edit-jasa-modals') ?>
 
 <script>
     $(function () {
@@ -76,7 +78,7 @@
                         <td>${item.nama_jasa}</td>
                         <td>${item.email_user}</td>
                         <td>${item.no_handphone_user}</td>
-                        <td>${item.nama_lokasilayanan_jasa}</td>
+                        <td>${item.nama_lokasi}</td>
                         <td>${item.alamat}</td>
                         <td>
                             <div class="dropdown">
@@ -84,9 +86,18 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <button type="button" class="dropdown-item btn-edit-layanan" data-toggle="modal" data-target="#editlayananmodal"
+                                    <button type="button" class="dropdown-item btn-edit-jasa" data-toggle="modal" data-target="#editjasamodal"
                                         data-id="${item.id}"
-                                        data-layanan="${item.layanan}">
+                                        data-user_id="${item.user_id}"
+                                        data-lokasi_id="${item.lokasi_id}"
+                                        data-deskripsi="${item.deskripsi}"
+                                        data-nama_jasa="${item.nama_jasa}"
+                                        data-image_url="${item.image_url}"
+                                        data-nama_email_user="${item.nama_email_user}"
+                                        data-no_handphone_user="${item.no_handphone_user}"
+                                        data-nama_lokasi="${item.nama_lokasi}"
+                                        data-alamat="${item.alamat}"
+                                        data-username_user="${item.username_user}">
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
@@ -135,6 +146,7 @@
                 dataType: 'json',
                 success: function (response) {
                     filteredData = response.data;
+                    console.log('Data fetched successfully:', filteredData);
                     displayTable(filteredData);
                     displayPagination(filteredData.length);
                 },
@@ -146,21 +158,18 @@
 
         loadData();
 
-        $('#form-add-layanan').on('submit', function (e) {
+        $('#form-add-jasa').on('submit', function (e) {
         e.preventDefault();
 
         const form = this;
-        const formData = {
-            layanan: $(form).find('input[name="layanan"]').val(),
-        };
+		const formData = new FormData(form);
 
         $.ajax({
             url: `/api/v1/layanan`,
             type: 'POST',
-            dataType: 'json',
-            data: JSON.stringify(formData),
-            processData: false,
-            contentType: 'application/json',
+           data: formData,
+			processData: false,
+			contentType: false, 
             success: function (response) {
                 console.log(response.data);
                 alert(response.message);
@@ -232,31 +241,33 @@
 
         // Update
 
-        $(document).on('click', '.btn-edit-layanan', function () {
+        $(document).on('click', '.btn-edit-jasa', function () {
             const button = $(this);
-            $('#editlayananmodal input[name="id"]').val(button.data('id'));
-            $('#editlayananmodal input[name="layanan"]').val(button.data('layanan'));
+            $('#editjasamodal input[name="id"]').val(button.data('id'));
+            $('#editjasamodal select[name="user_id"]').val(button.data('user_id')).trigger('change');
+            $('#editjasamodal select[name="lokasi_id"]').val(button.data('lokasi_id')).trigger('change');
+            $('#editjasamodal input[name="nama_jasa"]').val(button.data('nama_jasa'));
+            $('#editjasamodal input[name="alamat"]').val(button.data('alamat'));
+            $('#editjasamodal input[name="image"]').val(button.data('image_url'));
+            $('#editjasamodal textarea[name="deskripsi"]').val(button.data('deskripsi'));
         });
 
-        $('#form-edit-layanan').on('submit', function (e) {
+    $('#form-edit-jasa').on('submit', function (e) {
     e.preventDefault();
 
     const form = this;
-    const id = $(form).find('input[name="id"]').val();
-    const formData = {
-        layanan: $(form).find('input[name="layanan"]').val(),
-    };
+	const formData = new FormData(form);
+    const id = formData.get('id');
 
     $.ajax({
             url: `/api/v1/layanan/${id}`,
-            type: 'PUT',
-            dataType: 'json',
-            data: JSON.stringify(formData),
+            type: 'POST',
+            data: formData,
             processData: false,
-            contentType: 'application/json',
+			contentType: false, 
             success: function (response) {
                 alert(response.message);
-                $('#editlayananmodal').modal('hide');
+                $('#editjasamodal').modal('hide');
                 loadData();
             },
             error: function (xhr) {
@@ -284,7 +295,13 @@
     $('#searchinput').on('input', function () {
         const keyword = $(this).val().toLowerCase();
         const filtered = filteredData.filter(item =>
-            item.layanan.toLowerCase().includes(keyword)
+            item.nama_jasa.toLowerCase().includes(keyword) ||
+            item.alamat.toLowerCase().includes(keyword) ||
+            item.deskripsi.toLowerCase().includes(keyword) ||
+            item.username_user.toLowerCase().includes(keyword) ||
+            item.email_user.toLowerCase().includes(keyword) ||
+            item.alamat_user.toLowerCase().includes(keyword) ||
+            item.nama_lokasi.toLowerCase().includes(keyword) 
         );
 
         currentPage = 1; // reset to first page

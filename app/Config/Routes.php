@@ -83,7 +83,7 @@
             $routes->get('countlayanan', 'Api\V1\LayananController::countLayanan',     ['as' => 'api.layanan.countLayanan']);
             $routes->get('(:num)', 'Api\V1\LayananController::getDataLayananById/$1', ['as' => 'api.layanan.getDataLayananById']);
             $routes->delete('(:num)', 'Api\V1\LayananController::deleteDataLayananById/$1', ['as' => 'api.layanan.deleteDataLayananById']);
-            $routes->put('(:num)', 'Api\V1\LayananController::updateDataLayananById/$1', ['as' => 'api.layanan.updateDataLayananById']);
+            $routes->post('(:num)', 'Api\V1\LayananController::updateDataLayananById/$1', ['as' => 'api.layanan.updateDataLayananById']);
         });
 
     });

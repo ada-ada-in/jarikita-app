@@ -20,6 +20,10 @@
 		<script src="/assets/deskapp/src/plugins/datatables/js/vfs_fonts.js"></script>
 		<!-- Datatable Setting js -->
 		<script src="/assets/deskapp/vendors/scripts/datatable-setting.js"></script>
+		<!-- Select2 CSS -->
+<!-- jQuery (sudah kamu pakai) dan Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 		<script src="/assets/deskapp/src/plugins/apexcharts/apexcharts.min.js"></script>
 		<script src="/assets/deskapp/vendors/scripts/apexcharts-setting.js"></script>

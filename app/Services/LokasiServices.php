@@ -141,7 +141,7 @@ class LokasiServices {
     public function countLokasiServices(){
         $LokasiData = new LokasiModel();
 
-        $count = $LokasiData->where('role', 'Lokasi')->countAllResults();
+        $count = $LokasiData->countAllResults();
 
         return $count;
     

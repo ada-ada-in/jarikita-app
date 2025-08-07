@@ -11,9 +11,9 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">75</div>
+									<div class="weight-700 font-24 text-dark" id="user"></div>
 									<div class="font-14 text-secondary weight-500">
-										Appointment
+										Pengguna
 									</div>
 								</div>
 								<div class="widget-icon">
@@ -28,9 +28,9 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">124,551</div>
+									<div class="weight-700 font-24 text-dark" id="layanan"></div>
 									<div class="font-14 text-secondary weight-500">
-										Total Patient
+										Penyedia Jasa
 									</div>
 								</div>
 								<div class="widget-icon">
@@ -45,9 +45,9 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">400+</div>
+									<div class="weight-700 font-24 text-dark" id="lokasi">+</div>
 									<div class="font-14 text-secondary weight-500">
-										Total Doctor
+										Lokasi
 									</div>
 								</div>
 								<div class="widget-icon">
@@ -65,8 +65,8 @@
 						<div class="card-box height-100-p widget-style3">
 							<div class="d-flex flex-wrap">
 								<div class="widget-data">
-									<div class="weight-700 font-24 text-dark">$50,000</div>
-									<div class="font-14 text-secondary weight-500">Earning</div>
+									<div class="weight-700 font-24 text-dark" id="log"></div>
+									<div class="font-14 text-secondary weight-500">Log</div>
 								</div>
 								<div class="widget-icon">
 									<div class="icon" data-color="#09cc06">
@@ -83,5 +83,59 @@
 					<div id="chart2"></div>
 				</div> -->
 			</div>
+
+
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			url: "/api/v1/users/countuser",
+			method: "GET",
+			dataType: "json",
+			success: function(response) {	
+				const data = response.data;
+				$('#user').text(data);
+			},
+			error: function(xhr) {
+				console.error("Error fetching dashboard data:", xhr);
+			}
+		});
+		$.ajax({
+			url: "/api/v1/layanan/countlayanan",
+			method: "GET",
+			dataType: "json",
+			success: function(response) {	
+				const data = response.data;
+				$('#layanan').text(data);
+			},
+			error: function(xhr) {
+				console.error("Error fetching dashboard data:", xhr);
+			}
+		});
+		$.ajax({
+			url: "/api/v1/log/countlog",
+			method: "GET",
+			dataType: "json",
+			success: function(response) {	
+				const data = response.data;
+				$('#log').text(data);
+			},
+			error: function(xhr) {
+				console.error("Error fetching dashboard data:", xhr);
+			}
+		});
+		$.ajax({
+			url: "/api/v1/lokasi/countlokasi",
+			method: "GET",
+			dataType: "json",
+			success: function(response) {	
+				const data = response.data;
+				$('#lokasi').text(data);
+			},
+			error: function(xhr) {
+				console.error("Error fetching dashboard data:", xhr);
+			}
+		});
+	});
+</script>
 
 <?= $this->endSection() ?> 

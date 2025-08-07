@@ -179,7 +179,7 @@ class LayananServices {
     public function countLayananServices(){
         $LayananData = new LayananJasaModel();
 
-        $count = $LayananData->where('role', 'Layanan')->countAllResults();
+        $count = $LayananData->countAllResults();
 
         return $count;
     

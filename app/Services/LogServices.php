@@ -149,7 +149,7 @@ class LogServices {
     public function countLogServices(){
         $LogData = new LogModel();
 
-        $count = $LogData->where('role', 'Log')->countAllResults();
+        $count = $LogData->countAllResults();
 
         return $count;
     
