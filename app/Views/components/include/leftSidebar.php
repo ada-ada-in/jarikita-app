@@ -1,4 +1,4 @@
-<div class="left-side-bar">
+		<div class="left-side-bar">
 			<div class="brand-logo d-flex flex-column align-items-center justify-content-center text-center py-3">
 			<a href="<?= url_to('admin') ?>">
 				<img src="/template/images/logo-jari-kita.png" width="60px" alt="Logo" class="dark-logo mb-1 py-3" />
