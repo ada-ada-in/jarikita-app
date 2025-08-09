@@ -14,7 +14,7 @@ class UsersTable extends Migration
             'email' => ['type'  => 'VARCHAR', 'constraint' => 150, 'unique' => true],
             'no_handphone' => ['type'  => 'VARCHAR', 'constraint' => 15],
             'avatar_url' => ['type'  => 'VARCHAR', 'constraint' => 200],
-            'role' => ['type'  => 'ENUM', 'constraint' => ["admin", "user"]],
+            'role' => ['type'  => 'ENUM', 'constraint' => ["admin", "user", "seller"]],
             'alamat'    => ['type' => 'VARCHAR', 'constraint' => 255],
             'password'    => ['type' => 'VARCHAR', 'constraint' => 255],
             'created_at'  => ['type' => 'DATETIME', 'null' => true],

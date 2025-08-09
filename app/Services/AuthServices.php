@@ -107,6 +107,7 @@ class AuthServices {
                 'id' => $user['id'],
                 'role' => $user['role'],
                 'email' => $user['email'],
+                'username' => $user['username'],
                 'no_handphone' => $user['no_handphone'],
                 'isLoggedIn' => true
             ]); 
@@ -115,6 +116,7 @@ class AuthServices {
                 'status'  => true,
                 'message' => 'Login successful',
                 'role' => $user['role'],
+                'username' => $user['username'],
                 'id' => $user['id'],
                 'email' => $user['email'],
                 'no_handphone' => $user['no_handphone']

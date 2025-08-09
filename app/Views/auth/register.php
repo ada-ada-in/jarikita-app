@@ -44,6 +44,10 @@
 			href="/assets/deskapp/vendors/styles/icon-font.min.css"
 		/>
 		<link rel="stylesheet" type="text/css" href="/assets/deskapp/vendors/styles/style.css" />
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	</head>
 	<body class="login-page">
 		<div
@@ -52,19 +56,20 @@
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-md-6 col-lg-7">
-						<img src="/assets/deskapp/vendors/images/login-page-img.png" alt="" />
+						<img src="/template/images/jarikita.jpg" width="400" alt="" />
 					</div>
 					<div class="col-md-6 col-lg-5">
 						<div class="login-box bg-white box-shadow border-radius-10">
 							<div class="login-title">
 								<h2 class="text-center text-primary">Register</h2>
 							</div>
-							<form>
+							<form id="form-register">
 								<div class="input-group custom">
 									<input
 										type="text"
 										class="form-control form-control-lg"
-										placeholder="Username"
+										placeholder="Nama Lengkap"
+										name="username"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -77,6 +82,7 @@
 										type="email"
 										class="form-control form-control-lg"
 										placeholder="Email"
+										name="email"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -86,9 +92,10 @@
 								</div>
                                 <div class="input-group custom">
 									<input
-										type="text"
+										type="number"
 										class="form-control form-control-lg"
-										placeholder="Nama Lengkap"
+										placeholder="Nomor Handphone"
+										name="no_handphone"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -96,11 +103,35 @@
 										></span>
 									</div>
 								</div>
+                                <div class="input-group custom">
+									<input
+										type="text"
+										class="form-control form-control-lg"
+										placeholder="Alamat"
+										name="alamat"
+									/>
+									<div class="input-group-append custom">
+										<span class="input-group-text"
+											><i class="icon-copy dw dw-user1"></i
+										></span>
+									</div>
+								</div>
+                                <div class="input-group custom">
+									<input type="file" accept="image/*" class="form-control" name="image" placeholder="Photo" required>
+								</div>
+                                <div class="input-group custom">
+									<select name="role" id="" class="form-control form-control-lg">
+										<option value="" selected disabled>Pilih Role</option>
+										<option value="users">Pengguna</option>
+										<option value="seller">Penawar Jasa</option>
+									</select>
+								</div>
 								<div class="input-group custom">
 									<input
 										type="password"
 										class="form-control form-control-lg"
-										placeholder="**********"
+										placeholder="Password"
+										name="password"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -110,9 +141,10 @@
 								</div>
                                 <div class="input-group custom">
 									<input
-										type="Confirm Password"
+										type="password"
 										class="form-control form-control-lg"
-										placeholder="**********"
+										name="confirm_password"
+										placeholder="Konfirmasi Password"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -123,14 +155,10 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="input-group mb-0">
-											<!--
-											use code for form submit
-											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-										-->
-											<a
+											<button
 												class="btn btn-primary btn-lg btn-block"
-												href="index.html"
-												>Create Account</a
+												type="submit"
+												>Create Account</button
 											>
 										</div>
 										<div
@@ -142,7 +170,7 @@
 										<div class="input-group mb-0">
 											<a
 												class="btn btn-outline-primary btn-lg btn-block"
-												href="register.html"
+												href="/auth/login"
 												>Login</a
 											>
 										</div>
@@ -154,6 +182,57 @@
 				</div>
 			</div>
 		</div>
+
+<script>
+	$(document).ready(function() {
+			
+		$('#form-register').on('submit', function (e) {
+			e.preventDefault();
+			const form = this;
+			const formData = new FormData(form);
+
+			$.ajax({
+				url: '/api/v1/auth/register',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false, 
+				success: function (response) {
+					console.log(response.data);
+					alert(response.message);
+					window.location.href = '/auth/login';
+				},
+				error: function (xhr, status, error) {
+					try {
+        				const isJSON = xhr.getResponseHeader("Content-Type")?.includes("application/json");
+						 if (xhr.responseText && isJSON) {
+							const response = JSON.parse(xhr.responseText);
+							let errorMessage = '';
+
+							if (response.messages) {
+								for (const key in response.messages) {
+									errorMessage += `${response.messages[key]}\n`;
+								}
+							} else if (response.message) {
+								errorMessage = response.message;
+							} else {
+								errorMessage = 'Terjadi kesalahan yang tidak diketahui.';
+							}
+
+							alert(errorMessage);
+						} else {
+							console.error("Bukan JSON:", xhr.responseText);
+							alert('Respons dari server bukan format JSON.');
+						}
+					} catch (e) {
+						console.error('Gagal parse response error:', e);
+						alert('Terjadi kesalahan saat memproses respons error.');
+					}
+				}
+				})
+			});
+		});
+</script>
 
 		<!-- js -->
 		<script src="/assets/deskapp/vendors/scripts/core.js"></script>

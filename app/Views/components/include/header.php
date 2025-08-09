@@ -20,28 +20,42 @@
 				</div>
 				<div class="user-info-dropdown">
 					<div class="dropdown">
-						<a
-							class="dropdown-toggle"
-							href="#"
-							role="button"
-							data-toggle="dropdown"
-						>
-							<span class="user-icon">
-								<i class="dw dw-user1"></i>
+						<a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+							<span class="user-icon mr-2">
+								<img style="width: 50; height: 50px; object-fit: cover;" src="" alt="gambar" id="gambar" />
 							</span>
-							<span class="user-name">Admin</span>
+							<span id="user-name"></span>
 						</a>
-						<div
-							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
-						>
-							<a class="dropdown-item" href="<?= url_to('profile') ?>"
-								><i class="dw dw-user1"></i> Profile</a
-							>
-							<a class="dropdown-item" href="login.html"
-								><i class="dw dw-logout"></i> Log Out</a
-							>
+						<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+							<a class="dropdown-item" href="<?= url_to('profile') ?>">
+								<span class="user-icon">
+									<i class="dw dw-user1"></i>
+								</span> Profile
+							</a>
+							<a class="dropdown-item" href="login.html">
+								<i class="dw dw-logout"></i> Log Out
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "/api/v1/users/profile",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            const data = response.data[0];
+			console.log("data profile", data);
+            $('#user-name').text(data.username)
+            $('#gambar').attr('src', '/' + data.avatar_url)
+        },
+        error: function(xhr) {
+            console.error("Error fetching user data:", xhr);
+        }
+    });
+});
+</script>

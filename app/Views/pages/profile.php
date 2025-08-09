@@ -28,24 +28,19 @@
 								<div class="profile-tab height-100-p">
 									<div class="tab height-100-p">
 												<div class="profile-setting">
-													<form>
+													<form id="form-edit-profile">
 														<ul class="profile-edit-list row">
 															<li class="weight-500 col-md-12">
 																<h4 class="text-blue h5 mb-20">
 																	Edit Your Personal Setting
 																</h4>
 																<div class="form-group">
-																	<label>Full Name</label>
+																	<label>Nama Lengkap</label>
 																	<input
 																		class="form-control form-control-lg"
 																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Title</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
+																		name="username"
+																		id="username"
 																	/>
 																</div>
 																<div class="form-group">
@@ -53,125 +48,72 @@
 																	<input
 																		class="form-control form-control-lg"
 																		type="email"
+																		name="email"
+																		id="email"
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Date of birth</label>
+																	<label>Nomor Handphone</label>
 																	<input
-																		class="form-control form-control-lg date-picker"
-																		type="text"
+																		class="form-control form-control-lg"
+																		type="number"
+																		name="no_handphone"
+																		id="no_handphone"
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Gender</label>
-																	<div class="d-flex">
-																		<div
-																			class="custom-control custom-radio mb-5 mr-20"
-																		>
-																			<input
-																				type="radio"
-																				id="customRadio4"
-																				name="customRadio"
-																				class="custom-control-input"
-																			/>
-																			<label
-																				class="custom-control-label weight-400"
-																				for="customRadio4"
-																				>Male</label
-																			>
-																		</div>
-																		<div
-																			class="custom-control custom-radio mb-5"
-																		>
-																			<input
-																				type="radio"
-																				id="customRadio5"
-																				name="customRadio"
-																				class="custom-control-input"
-																			/>
-																			<label
-																				class="custom-control-label weight-400"
-																				for="customRadio5"
-																				>Female</label
-																			>
-																		</div>
-																	</div>
-																</div>
-																<div class="form-group">
-																	<label>Country</label>
+																	<label>Role</label>
 																	<select
 																		class="selectpicker form-control form-control-lg"
 																		data-style="btn-outline-secondary btn-lg"
-																		title="Not Chosen"
+																		title="Pilih Role"
+																		name="role"
+																		id="role"
 																	>
-																		<option>United States</option>
-																		<option>India</option>
-																		<option>United Kingdom</option>
+																		<option value="admin">Admin</option>
+																		<option value="user">Users</option>
+																		<option value="buyer">Penyedia Jasa</option>
 																	</select>
 																</div>
 																<div class="form-group">
-																	<label>State/Province/Region</label>
+																	<label>Alamat</label>
 																	<input
 																		class="form-control form-control-lg"
 																		type="text"
+																		name="alamat"
+																		id="alamat"
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Postal Code</label>
+																	<label>Gambar Profile</label>
+																	<input type="file" accept="image/*" class="form-control" name="image" placeholder="Photo">
+																</div>
+																<div class="form-group">
+																	<label>Password</label>
 																	<input
 																		class="form-control form-control-lg"
-																		type="text"
+																		type="password"
+																		name="password"
+																		id="password"
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Phone Number</label>
+																	<label>Konfirmasi Password</label>
 																	<input
 																		class="form-control form-control-lg"
-																		type="text"
+																		type="password"
+																		name="confirm_password"
+																		id="confirm_password"
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Address</label>
-																	<textarea class="form-control"></textarea>
-																</div>
-																<div class="form-group">
-																	<label>Visa Card Number</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<label>Paypal ID</label>
-																	<input
-																		class="form-control form-control-lg"
-																		type="text"
-																	/>
-																</div>
-																<div class="form-group">
-																	<div
-																		class="custom-control custom-checkbox mb-5"
-																	>
-																		<input
-																			type="checkbox"
-																			class="custom-control-input"
-																			id="customCheck1-1"
-																		/>
-																		<label
-																			class="custom-control-label weight-400"
-																			for="customCheck1-1"
-																			>I agree to receive notification
-																			emails</label
-																		>
-																	</div>
-																</div>
-																<div class="form-group mb-0">
-																	<input
+																	<button
+																		class="btn btn-primary btn-lg"
 																		type="submit"
-																		class="btn btn-primary"
-																		value="Update Information"
-																	/>
-																</div>
+																		id="btn-submit"
+																	>
+																		Simpan
+																	</button>
 															</li>
 														</ul>
 													</form>
@@ -181,5 +123,50 @@
                             </div>
                         </div>
                     </div>
+
+<script>
+	$(document).ready(function() {
+
+			$.ajax({
+				url: "/api/v1/users/profile",
+				type: "GET",
+				dataType: "json",
+				success: function(response) {
+					const data = response.data[0];
+					$('#username').val(data.username);
+					$('#email').val(data.email);
+					$('#no_handphone').val(data.no_handphone);
+					$('#role').val(data.role).change();
+					$('#alamat').val(data.alamat);
+				},
+				error: function(xhr) {
+					console.error("Error fetching user data:", xhr);
+				}
+			});
+
+		$('#form-edit-profile').on('submit',function(e) {
+			e.preventDefault();
+			const form = $(this);
+			const formData = new FormData(form[0]);
+			const id = <?= session()->get('id') ?>;
+
+			$.ajax({
+				url: `/api/v1/users/${id}`,
+				type: "POST",
+				dataType: "json",
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function(response) {
+					alert(response.message);
+					window.location.href = '/admin/profile';
+				},
+				error: function(xhr) {
+					console.error("Error updating user data:", xhr);
+				}
+			});
+		});
+	});	
+</script>
 
 <?= $this->endSection() ?>

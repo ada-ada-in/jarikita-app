@@ -44,6 +44,10 @@
 			href="/assets/deskapp/vendors/styles/icon-font.min.css"
 		/>
 		<link rel="stylesheet" type="text/css" href="/assets/deskapp/vendors/styles/style.css" />
+		<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	</head>
 	<body class="login-page">
 		<div
@@ -52,19 +56,20 @@
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-md-6 col-lg-7">
-						<img src="/assets/deskapp/vendors/images/login-page-img.png" alt="" />
+						<img src="/template/images/jarikita.jpg" width=400" alt="" />
 					</div>
 					<div class="col-md-6 col-lg-5">
 						<div class="login-box bg-white box-shadow border-radius-10">
 							<div class="login-title">
 								<h2 class="text-center text-primary">Login</h2>
 							</div>
-							<form>
+							<form id="form-login">
 								<div class="input-group custom">
 									<input
-										type="text"
+										type="email"
 										class="form-control form-control-lg"
-										placeholder="Username"
+										placeholder="Email"
+										name="email"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -77,6 +82,7 @@
 										type="password"
 										class="form-control form-control-lg"
 										placeholder="**********"
+										name="password"
 									/>
 									<div class="input-group-append custom">
 										<span class="input-group-text"
@@ -110,10 +116,10 @@
 											use code for form submit
 											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
 										-->
-											<a
+											<button
 												class="btn btn-primary btn-lg btn-block"
-												href="index.html"
-												>Sign In</a
+												type="submit"
+												>Sign In</button
 											>
 										</div>
 										<div
@@ -125,7 +131,7 @@
 										<div class="input-group mb-0">
 											<a
 												class="btn btn-outline-primary btn-lg btn-block"
-												href="register.html"
+												href="/auth/register"
 												>Register To Create Account</a
 											>
 										</div>
@@ -137,6 +143,62 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+			$(document).ready(function() {
+				$('#form-login').on('submit', function (e) {
+					e.preventDefault();
+					const form = this;
+					const formData = {
+						 email: $(form).find('input[name="email"]').val(),
+						 password: $(form).find('input[name="password"]').val(),
+					}
+					
+					console.log(formData);
+
+					$.ajax({
+						url: '/api/v1/auth/login',
+						type: 'POST',
+						data: JSON.stringify(formData),
+						contentType: false,
+						processData: false,
+						contentType: 'application/json',
+						success: function(response) {
+							message = response.data.message || 'Login successful';
+							alert(message);
+							role = response.role;
+							if( role === 'admin') {
+								window.location.href = '/admin/dashboard';
+							} else if (role === 'user') {
+								window.location.href = '/';
+							} else {
+								window.location.href = '/users/dashboard';
+							}
+							
+						},
+						error: function(xhr, status, error) {
+							try {
+								const response = JSON.parse(xhr.responseText);
+								alert(response.message);
+							} catch (e) {
+								alert('An error occurred while logging in.');
+							}
+						}
+					});
+				});
+					
+				$.ajax({
+					url: '/api/v1/auth/login',
+					type: 'POST',
+					success: function(response) {
+						console.log('Login status checked successfully:', response);
+					},
+					error: function(xhr, status, error) {
+						console.error('Error checking login status:', error);
+					}
+				})
+			});
+		</script>
 
 		<!-- js -->
 		<script src="/assets/deskapp/vendors/scripts/core.js"></script>

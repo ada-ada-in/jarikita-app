@@ -14,6 +14,14 @@
 #     "confirm_password": "password"
 # }
 
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email": "user@example.com",
+    "password": "password"
+}
+
 # Users
 
 # GET http://localhost:8080/api/v1/users
@@ -95,5 +103,5 @@
 # GET http://localhost:8080/api/v1/layanan
 # Content-Type: application/json
 
-GET http://localhost:8080/api/v1/layanan/countlayanan
-Content-Type: application/json
+# GET http://localhost:8080/api/v1/layanan/countlayanan
+# Content-Type: application/json
