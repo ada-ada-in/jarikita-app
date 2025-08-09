@@ -80,6 +80,23 @@ class LayananController extends ResourceController {
             }
     }
 
+    public function getDataLayananByUsers(){
+
+            try {
+                $data = $this->layananServices->getLayananDataByUsersServices();
+        
+                return $this->respond([
+                    'data' => $data,
+                    'message' => 'Data retrieved successfully'
+                ], 200);
+        
+            } catch (\Exception $e) {
+                return $this->fail([
+                    $e->getMessage()
+                ]);
+            }
+    }
+
     public function getDataLayananById($id){
         try {
     
@@ -173,6 +190,24 @@ class LayananController extends ResourceController {
     public function countLayanan(){
         try{
             $countData = $this->layananServices->countLayananServices();
+
+            return $this->respondCreated([
+                'status' => true,
+                'data' => $countData,
+                'message' => 'Data retrieved succesfully'
+            ]);
+
+        }catch(\Exception $e){
+            return $this->fail([
+                'status' => false,
+                'message' => $e->getMessage()
+            ],500);
+        }
+    }
+
+    public function countLayananByUsers(){
+        try{
+            $countData = $this->layananServices->countLayananByUsersServices();
 
             return $this->respondCreated([
                 'status' => true,

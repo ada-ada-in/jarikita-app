@@ -18,6 +18,13 @@
         $routes->get('profile', 'PagesController::profile', ['as' => 'profile']);
     });
 
+    // seller pages
+    $routes->group('users', static function($routes) {
+        $routes->get('dashboard', 'PagesController::dashboardSeller', ['as' => 'dashboardSeller']);
+        $routes->get('jasa', 'PagesController::jasaSeller', ['as' => 'jasaSeller']);
+        $routes->get('profile', 'PagesController::profileSeller', ['as' => 'profileSeller']);
+    });
+
     // users pages
     $routes->group('/', static function($routes){
         $routes->get('', 'PagesController::main', ['as' => 'main']);
@@ -45,8 +52,8 @@
             $routes->get('', 'Api\V1\UsersController::getDataUser', ['as' => 'api.users.getDataUser']);
             $routes->get('profile', 'Api\V1\UsersController::getDataUserProfile', ['as' => 'api.users.getDataUserProfile']);
             $routes->put('profile/update', 'Api\V1\UsersController::getDataUserProfileById', ['as' => 'api.users.getDataUserProfileById']);
-            $routes->get('countuser', 'Api\V1\UsersController::countUser', ['as' => 'api.users.countUser']);
             $routes->get('(:num)', 'Api\V1\UsersController::getDataUserById/$1', ['as' => 'api.users.getDataUserById']);
+            $routes->get('countuser', 'Api\V1\UsersController::countUser', ['as' => 'api.users.countUser']);
             $routes->delete('(:num)', 'Api\V1\UsersController::deleteDataUserById/$1', ['as' => 'api.userss.deleteDataUserById']);
             $routes->post('(:num)', 'Api\V1\UsersController::updateDataUserById/$1', ['as' => 'api.users.updateDataUserById']);
         });
@@ -82,7 +89,9 @@
          $routes->group('layanan', static function($routes) {
             $routes->post('', 'Api\V1\LayananController::createLayanan', ['as' => 'api.layanan.createLayanan']);
             $routes->get('', 'Api\V1\LayananController::getDataLayanan', ['as' => 'api.layanan.getDataLayanan']);
+            $routes->get('users', 'Api\V1\LayananController::getDataLayananByUsers', ['as' => 'api.layanan.getDataLayananByUsers']);
             $routes->get('countlayanan', 'Api\V1\LayananController::countLayanan',     ['as' => 'api.layanan.countLayanan']);
+            $routes->get('countlayanan/users', 'Api\V1\LayananController::countLayananByUsers',     ['as' => 'api.layanan.countLayananByUsers']);
             $routes->get('(:num)', 'Api\V1\LayananController::getDataLayananById/$1', ['as' => 'api.layanan.getDataLayananById']);
             $routes->delete('(:num)', 'Api\V1\LayananController::deleteDataLayananById/$1', ['as' => 'api.layanan.deleteDataLayananById']);
             $routes->post('(:num)', 'Api\V1\LayananController::updateDataLayananById/$1', ['as' => 'api.layanan.updateDataLayananById']);

@@ -41,6 +41,20 @@ class PagesController extends BaseController
         return view('userPages/profile');
     }
 
+    // seller
+    public function dashboardSeller(): string
+    {
+        return view('sellerPages/dashboard');
+    }
+    public function jasaSeller(): string
+    {
+        return view('sellerPages/jasa');
+    }
+    public function profileSeller(): string
+    {
+        return view('sellerPages/profile');
+    }
+
 
     // auth
     public function login(): string
