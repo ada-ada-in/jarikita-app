@@ -21,15 +21,8 @@
           <div class="col-md-12">
 
             <div class="category-carousel swiper">
-              <div class="swiper-wrapper">
-                <a href="index.html" class="nav-link category-item swiper-slide shadow-m">
-                  <img src="/template/images/google-maps.png" width="50" alt="Category Thumbnail">
-                  <h3 class="category-title">Jambi</h3>
-                </a>
-                <a href="index.html" class="nav-link category-item swiper-slide shadow-m">
-                  <img src="/template/images/google-maps.png" width="50" alt="Category Thumbnail">
-                  <h3 class="category-title">Muaro Bungo</h3>
-                </a>
+              <div class="swiper-wrapper" id="lokasi-list">
+                
               </div>
             </div>
 
@@ -37,3 +30,31 @@
         </div>
       </div>
     </section>
+
+
+    <script>
+      $(document).ready(function() {
+        $.ajax({
+          url: "/api/v1/lokasi",
+          method: "GET",
+          dataType: "json",
+          success: function(response) {
+            const lokasiList = response.data;
+            console.log(lokasiList);
+            const lokasiContainer = $('#lokasi-list');
+            lokasiList.forEach(function(lokasi) {
+              const lokasiItem = `
+                <a href="/lokasi/${lokasi.id}" class="nav-link category-item swiper-slide shadow-m">
+                  <img src="/template/images/google-maps.png" width="50" alt="Category Thumbnail">
+                  <h3 class="category-title">${lokasi.lokasi}</h3>
+                </a>
+              `;
+              lokasiContainer.append(lokasiItem);
+            });
+          },
+          error: function(xhr) {
+            console.error("Error fetching lokasi data:", xhr);
+          }
+        });
+      });
+    </script>

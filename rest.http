@@ -14,13 +14,13 @@
 #     "confirm_password": "password"
 # }
 
-POST http://localhost:8080/api/v1/auth/login
-Content-Type: application/json
+# POST http://localhost:8080/api/v1/auth/login
+# Content-Type: application/json
 
-{
-    "email": "user@example.com",
-    "password": "password"
-}
+# {
+#     "email": "user@example.com",
+#     "password": "password"
+# }
 
 # Users
 
@@ -87,7 +87,7 @@ Content-Type: application/json
 # GET http://localhost:8080/api/v1/lokasi
 # Content-Type: application/json
 
-# GET http://localhost:8080/api/v1/lokasi/1
+# GET http://localhost:8080/api/v1/lokasi/3
 # Content-Type: application/json
 
 # PUT http://localhost:8080/api/v1/lokasi/1

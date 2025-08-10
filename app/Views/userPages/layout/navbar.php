@@ -84,15 +84,8 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <!-- bikin disini rik pake bootstrap -->
-                <li class="nav-item"><a class="nav-link active" href="#women">Women</a></li>
-                <li class="nav-item"><a class="nav-link" href="#men">Men</a></li>
-                <li class="nav-item"><a class="nav-link" href="#kids">Kids</a></li>
-                <li class="nav-item"><a class="nav-link" href="#accessories">Accessories</a></li>
-                <li class="nav-item"><a class="nav-link" href="#brand">Brand</a></li>
-                <li class="nav-item"><a class="nav-link" href="#sale">Sale</a></li>
-                <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
-                <li class="nav-item ms-2"><a class="nav-link border border-success text-success bg-white rounded px-3 py-1" href="#signup">Sign Up</a></li>
-                <li class="nav-item ms-2"><a class="nav-link border border-success bg-success text-white rounded px-3 py-1" href="#login">Login</a></li>
+                <li class="nav-item ms-2"><a style="color: #1b3cde; border-color: #1b3cde;" class="nav-link border bg-white rounded px-3 py-1" href="/auth/register">Sign Up</a></li>
+                <li class="nav-item ms-2"><a style="color: #1b3cde; background-color: #1b3cde; border-color: #1b3cde;" class="nav-link border border-primary text-white rounded px-3 py-1" href="/auth/login">Login</a></li>
               </ul>
             </div>
           </div>  
