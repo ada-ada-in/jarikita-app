@@ -44,7 +44,7 @@
             const lokasiContainer = $('#lokasi-list');
             lokasiList.forEach(function(lokasi) {
               const lokasiItem = `
-                <a href="/lokasi/${lokasi.id}" class="nav-link category-item swiper-slide shadow-m">
+                <a href="/lokasi/${lokasi.id}" class="nav-link category-item swiper-slide">
                   <img src="/template/images/google-maps.png" width="50" alt="Category Thumbnail">
                   <h3 class="category-title">${lokasi.lokasi}</h3>
                 </a>

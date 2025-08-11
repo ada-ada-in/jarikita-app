@@ -59,7 +59,7 @@
       <!-- Logo -->
       <div class="col-sm-4 col-lg-3 text-center text-sm-start">
         <div class="main-logo">
-          <a href="index.html">
+          <a href="/">
             <img src="/template/images/logo-jari-kita.png" alt="logo" class="img-fluid">
           </a>
         </div>

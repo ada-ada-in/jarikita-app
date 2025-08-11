@@ -57,8 +57,8 @@
 
         jasaList.forEach(function (jasa) {
           const jasaItem = `
-            <div class="col shadow-lg"> 
-              <div class="product-item">
+            <div class="col"> 
+              <div class="product-item shadow">
                 <figure>
                   <a href="/jasa/${jasa.id}" title="${jasa.nama_jasa}">
                     <img src="${jasa.image_url}" alt="${jasa.nama_jasa}">
