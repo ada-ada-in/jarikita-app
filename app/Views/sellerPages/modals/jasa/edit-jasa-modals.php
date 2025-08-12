@@ -19,6 +19,9 @@
                                 <input type="text" class="form-control" name="nama_jasa" placeholder="Nama Layanan Jasa" required>
                             </div>
                             <div class="col-12 mt-3">
+                                <input type="text" class="form-control" name="bidang_jasa" placeholder="Bidang jasa anda bergerak di bidang apa" required>
+                            </div>
+                            <div class="col-12 mt-3">
                                 <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
                             </div>
                             <div class="col-12 mt-3">

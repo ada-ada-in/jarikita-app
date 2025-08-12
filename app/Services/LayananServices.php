@@ -27,6 +27,10 @@ class LayananServices {
                 'label' => 'nama_jasa',
                 'rules' => 'required'
             ],
+            'bidang_jasa'   => [
+                'label' => 'bidang_jasa',
+                'rules' => 'required'
+            ],
             'alamat'   => [
                 'label' => 'alamat',
                 'rules' => 'required'
@@ -51,6 +55,7 @@ class LayananServices {
             'user_id'    => $data['user_id'],
             'lokasi_id'       => $data['lokasi_id'],
             'nama_jasa' => $data['nama_jasa'],
+            'bidang_jasa' => $data['bidang_jasa'],
             'alamat' => $data['alamat'],
             'image_url' => $data['image_url'],
             'deskripsi' => $data['deskripsi']
@@ -123,7 +128,43 @@ class LayananServices {
 
         $LayananData = new LayananJasaModel();
     
-        $data = $LayananData->find($id);
+        $data = $LayananData
+        ->select('layanan_jasa.*, users.username as username_user, users.email as email_user, users.alamat as alamat_user, users.no_handphone as no_handphone_user')
+        ->join('users', 'users.id = layanan_jasa.user_id', 'left')
+        ->select('layanan_jasa.*, lokasi.lokasi as nama_lokasi')
+        ->join('lokasi', 'lokasi.id = layanan_jasa.lokasi_id', 'left')
+        ->orderBy('created_at', 'DESC')
+        ->find($id);
+    
+        if (!$data) {
+            return [
+                'status'  => false,
+                'message' => 'Layanan not found'
+            ];
+        }
+    
+        return $data;
+    }
+
+    public function getDataLayananByLokasiIdServices($id){
+
+        if (!$id) {
+            return [
+                'status'  => false,
+                'message' => 'ID is required'
+            ];
+        }
+
+        $LayananData = new LayananJasaModel();
+    
+        $data = $LayananData
+        ->select('layanan_jasa.*, users.username as username_user, users.email as email_user, users.alamat as alamat_user, users.no_handphone as no_handphone_user')
+        ->join('users', 'users.id = layanan_jasa.user_id', 'left')
+        ->select('layanan_jasa.*, lokasi.lokasi as nama_lokasi')
+        ->join('lokasi', 'lokasi.id = layanan_jasa.lokasi_id', 'left')
+        ->orderBy('created_at', 'DESC')
+        ->where('lokasi_id', $id)
+        ->findAll();
     
         if (!$data) {
             return [

@@ -80,6 +80,23 @@ class LayananController extends ResourceController {
             }
     }
 
+    public function getDataLayananByLokasiId($id){
+
+            try {
+                $data = $this->layananServices->getDataLayananByLokasiIdServices($id);
+        
+                return $this->respond([
+                    'data' => $data,
+                    'message' => 'Data retrieved successfully'
+                ], 200);
+        
+            } catch (\Exception $e) {
+                return $this->fail([
+                    $e->getMessage()
+                ]);
+            }
+    }
+
     public function getDataLayananByUsers(){
 
             try {

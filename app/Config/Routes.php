@@ -28,7 +28,8 @@
     // users pages
     $routes->group('/', static function($routes){
         $routes->get('', 'PagesController::main', ['as' => 'main']);
-        $routes->get('profile', 'PagesController::profilejasa', ['as' => 'profilejasa']);
+        $routes->get('profile/(:num)', 'PagesController::profilejasa/$ ', ['as' => 'profilejasa']);
+        $routes->get('lokasi/(:num)', 'PagesController::lokasijasa/$1', ['as' => 'lokasijasa']);
     });
 
 
@@ -90,6 +91,7 @@
             $routes->post('', 'Api\V1\LayananController::createLayanan', ['as' => 'api.layanan.createLayanan']);
             $routes->get('', 'Api\V1\LayananController::getDataLayanan', ['as' => 'api.layanan.getDataLayanan']);
             $routes->get('users', 'Api\V1\LayananController::getDataLayananByUsers', ['as' => 'api.layanan.getDataLayananByUsers']);
+            $routes->get('lokasi/(:num)', 'Api\V1\LayananController::getDataLayananByLokasiId/$1', ['as' => 'api.layanan.getDataLayananByLokasiId']);
             $routes->get('countlayanan', 'Api\V1\LayananController::countLayanan',     ['as' => 'api.layanan.countLayanan']);
             $routes->get('countlayanan/users', 'Api\V1\LayananController::countLayananByUsers',     ['as' => 'api.layanan.countLayananByUsers']);
             $routes->get('(:num)', 'Api\V1\LayananController::getDataLayananById/$1', ['as' => 'api.layanan.getDataLayananById']);

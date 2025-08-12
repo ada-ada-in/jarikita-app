@@ -100,7 +100,10 @@
 
 # layanan
 
-# GET http://localhost:8080/api/v1/layanan
+# GET http://localhost:8080/api/v1/layanan/2
+# Content-Type: application/json
+
+# GET http://localhost:8080/api/v1/layanan/lokasi/1
 # Content-Type: application/json
 
 # GET http://localhost:8080/api/v1/layanan/countlayanan

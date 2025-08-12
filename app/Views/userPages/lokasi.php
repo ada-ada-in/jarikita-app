@@ -1,4 +1,11 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+    <?= view('userPages/layout/header') ?>
+  <body>
+
+   <?= view('userPages/layout/navbar') ?>
+
+   <style>
   .product-item figure {
     width: 100%;
     aspect-ratio: 1 / 1;
@@ -46,12 +53,14 @@
 
 <script>
   $(document).ready(function () {
+    const pathSegments = window.location.pathname.split('/');
+    const id = pathSegments[pathSegments.length - 1];
     $.ajax({
-      url: "/api/v1/layanan",
+      url: `/api/v1/layanan/lokasi/${id}`,
       method: "GET",
       dataType: "json",
       success: function (response) {
-        const jasaList = response.data;
+        const jasaList = Array.isArray(response.data) ? response.data : [];
         console.log(jasaList);
         const jasaContainer = $('#jasa-list');
 
@@ -61,7 +70,7 @@
               <div class="product-item shadow">
                 <figure>
                   <a href="/profile/${jasa.id}" title="${jasa.nama_jasa}">
-                    <img src="${jasa.image_url}" alt="${jasa.nama_jasa}">
+                    <img src="/${jasa.image_url}" alt="${jasa.nama_jasa}">
                   </a>
                 </figure>
                 <h3 class="text-center">${jasa.nama_jasa}</h3>
@@ -78,3 +87,8 @@
     });
   });
 </script>
+
+    <?= view('userPages/layout/footer') ?>
+
+  </body>
+</html>s

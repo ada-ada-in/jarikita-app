@@ -9,16 +9,16 @@
 
   <div class="row align-items-center mb-5">
     <div class="col-md-6 text-center text-md-left">
-      <h1 class="display-4 font-weight-bold text-jari mb-3">PT. Maju Bersama</h1>
-      <p class="lead text-muted mb-4">
-        Jasa konstruksi, renovasi, dan desain interior terpercaya di Jakarta.
+      <h1 class="display-4 font-weight-bold text-jari mb-3" id="nama_jasa"></h1>
+      <p class="lead text-muted mb-4" id="bidang_jasa">
+        <!-- bidang jasa -->
       </p>
-      <a href="tel:+6281234567890" class="btn btn-gradient btn-lg shadow d-none d-md-inline-block">
-        <i class="fas fa-phone"></i> Hubungi: +62 812-3456-7890
+      <a id="sendlog" href="tel:+6281234567890" class="btn btn-gradient btn-lg shadow d-none d-md-inline-block">
+        <i class="fas fa-phone" id="username"></i> Whatsapp
       </a>
     </div>
     <div class="col-md-6 text-center">
-      <img src="https://plus.unsplash.com/premium_photo-1661721799629-7b6643f49fa0?q=80&w=1170&auto=format&fit=crop"
+      <img id="gambar" src=""
            alt="Gambar Perusahaan"
            class="img-fluid rounded-lg shadow hero-img">
     </div>
@@ -28,10 +28,8 @@
   <div class="row mb-5">
     <div class="col text-center">
       <h2 class="mb-3 font-weight-bold">Tentang Kami</h2>
-      <p class="text-muted mb-4 px-md-5">
-        PT. Maju Bersama adalah perusahaan yang bergerak di bidang jasa konstruksi, renovasi, dan desain interior.
-        Dengan pengalaman lebih dari 10 tahun, kami telah melayani ratusan klien dengan hasil memuaskan.
-        Tim profesional kami siap memberikan pelayanan terbaik untuk mewujudkan rumah atau gedung impian Anda.
+      <p class="text-muted mb-4 px-md-5" id="deksripsi">
+        <!-- deskripsi -->
       </p>
       <a href="tel:+6281234567890" class="btn btn-gradient btn-lg shadow d-inline-block d-md-none">
         <i class="fas fa-phone"></i> Hubungi: +62 812-3456-7890
@@ -46,8 +44,7 @@
     <div class="card shadow border-0 rounded-lg overflow-hidden">
         <div class="card-body">
         <h4 class="card-title mb-3">📍 Alamat</h4>
-        <p class="mb-0">Jl. Merdeka No. 123</p>
-        <p class="mb-3">Jakarta Pusat, DKI Jakarta</p>
+        <p class="mb-0" id="alamat"></p>
         </div>
         <!-- Google Map Embed -->
         <!-- <div class="map-container">
@@ -134,61 +131,131 @@
   object-fit: cover; /* mirip efek object-fit di gambar */
 }
 
+
+
 </style>
 
 <!-- Script -->
-<script>
-  const oldReviews = [
-    { text: "Harga terjangkau, kualitas oke!", name: "Budi" },
-    { text: "Tim sangat profesional.", name: "Rina" },
-    { text: "Hasil renovasi sesuai harapan.", name: "Agus" }
-  ];
 
-  let savedReviews = JSON.parse(localStorage.getItem('reviews')) || [
-    { text: "Pelayanan sangat memuaskan!", name: "Andi" },
-    { text: "Proses cepat dan hasil rapi.", name: "Sinta" }
-  ];
-
-  function addReview(text, name, save = true) {
-    const card = document.createElement('div');
-    card.className = 'card mb-3 shadow-sm';
-    card.innerHTML = `
-      <div class="card-body">
-        <p class="mb-2 font-italic text-dark">"${text}"</p>
-        <small class="text-muted">- ${name}</small>
-      </div>
-    `;
-    document.getElementById('review-container').prepend(card);
-
-    if (save) {
-      savedReviews.unshift({ text, name });
-      localStorage.setItem('reviews', JSON.stringify(savedReviews));
-    }
-  }
-
-  savedReviews.forEach(r => addReview(r.text, r.name, false));
-
-  document.getElementById('review-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const reviewInput = document.getElementById('review-input');
-    const newReview = reviewInput.value.trim();
-    if (newReview) {
-      addReview(newReview, "Pengunjung");
-      reviewInput.value = '';
-    }
-  });
-
-  document.getElementById('load-more').addEventListener('click', function() {
-    oldReviews.forEach(r => addReview(r.text, r.name));
-    this.style.display = 'none';
-  });
-</script>
 
     <script src="/template/js/jquery-1.11.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="/template/js/plugins.js"></script>
     <script src="/template/js/script.js"></script>
+    <script>
+
+    $(document).ready(function(){
+      const pathSegments = window.location.pathname.split('/');
+      const id = pathSegments[pathSegments.length - 1];
+      const email = '<?= session()->get('email') ?>';
+      const no_handphone = '<?= session()->get('no_handphone') ?>';
+      const username = '<?= session()->get('username') ?>';
+      let namaJasa = '';
+      let deskripsi = '';
+      // Ambil data layanan
+      $.ajax({
+        url: `/api/v1/layanan/${id}`,
+        dataType: 'json',
+        success: function(response) {
+        const data = response.data; 
+        namaJasa = data.nama_jasa;
+        deskripsi = `pengguna dengan nama ${username} melakukan penawaran dengan jasa ${namaJasa}`;
+
+
+          $('#nama_jasa').text(data.nama_jasa);
+          $('#deksripsi').text(data.deskripsi);
+          $('#username').text(data.username);
+          $('#alamat').text(data.alamat);
+          $('#gambar').attr('src', '/' + data.image_url);
+          $('#bidang_jasa').text(data.bidang_jasa);
+        },
+        error: function(xhr, status, error) {
+          console.error('Error fetching layanan data:', error);
+          $('#nama_jasa').text('Layanan tidak ditemukan');
+        }
+      });
+      
+      $.ajax({
+        url: `api/v1/review/jasa/${id}`,
+        method: "GET",
+        dataType: "json",
+        success: function(response) {
+          const reviews = response.data;
+          const reviewContainer = $('#review-container');
+          reviewContainer.empty();
+        }
+      })
+
+      // Klik kirim log
+      $('#sendlog').on('click', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+          url: `/api/v1/log`,
+          type: 'POST',
+          dataType: 'json',
+          data: JSON.stringify({
+            email: email,
+            no_handphone: no_handphone,
+            deskripsi: deskripsi
+          }),
+          success: function(response) {
+            console.log('Log entry created:', response.message);
+          },
+          error: function(xhr, status, error) {
+            console.error('Error creating log entry:', error);
+          }
+        });
+      });
+    });
+
+
+    const oldReviews = [
+      { text: "Harga terjangkau, kualitas oke!", name: "Budi" },
+      { text: "Tim sangat profesional.", name: "Rina" },
+      { text: "Hasil renovasi sesuai harapan.", name: "Agus" }
+    ];
+
+    let savedReviews = JSON.parse(localStorage.getItem('reviews')) || [
+      { text: "Pelayanan sangat memuaskan!", name: "Andi" },
+      { text: "Proses cepat dan hasil rapi.", name: "Sinta" }
+    ];
+
+    function addReview(text, name, save = true) {
+      const card = document.createElement('div');
+      card.className = 'card mb-3 shadow-sm';
+      card.innerHTML = `
+        <div class="card-body">
+          <p class="mb-2 font-italic text-dark">"${text}"</p>
+          <small class="text-muted">- ${name}</small>
+        </div>
+      `;
+      document.getElementById('review-container').prepend(card);
+
+      if (save) {
+        savedReviews.unshift({ text, name });
+        localStorage.setItem('reviews', JSON.stringify(savedReviews));
+      }
+    }
+
+    savedReviews.forEach(r => addReview(r.text, r.name, false));
+
+    document.getElementById('review-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const reviewInput = document.getElementById('review-input');
+      const newReview = reviewInput.value.trim();
+      if (newReview) {
+        addReview(newReview, "Pengunjung");
+        reviewInput.value = '';
+      }
+    });
+
+    document.getElementById('load-more').addEventListener('click', function() {
+      oldReviews.forEach(r => addReview(r.text, r.name));
+      this.style.display = 'none';
+    });
+  </script>
 
 </body>
 </html>

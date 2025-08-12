@@ -41,6 +41,11 @@ class PagesController extends BaseController
         return view('userPages/profile');
     }
 
+    public function lokasijasa(): string
+    {
+        return view('userPages/lokasi');
+    }
+
     // seller
     public function dashboardSeller(): string
     {
