@@ -55,7 +55,7 @@
 		>
 			<div class="container">
 				<div class="row align-items-center">
-					<div class="col-md-6 col-lg-7">
+					<div class="col-md-6 col-lg-7 d-none d-md-block">
 						<img src="/template/images/jarikita.jpg" width="400" alt="" />
 					</div>
 					<div class="col-md-6 col-lg-5">
@@ -122,7 +122,7 @@
                                 <div class="input-group custom">
 									<select name="role" id="" class="form-control form-control-lg">
 										<option value="" selected disabled>Pilih Role</option>
-										<option value="users">Pengguna</option>
+										<option value="user">Pengguna</option>
 										<option value="seller">Penawar Jasa</option>
 									</select>
 								</div>

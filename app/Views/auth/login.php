@@ -55,7 +55,7 @@
 		>
 			<div class="container">
 				<div class="row align-items-center">
-					<div class="col-md-6 col-lg-7">
+					<div class="col-md-6 col-lg-7 d-none d-md-block">
 						<img src="/template/images/jarikita.jpg" width=400" alt="" />
 					</div>
 					<div class="col-md-6 col-lg-5">

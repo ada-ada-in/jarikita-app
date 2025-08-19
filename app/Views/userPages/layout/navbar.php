@@ -84,8 +84,33 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <!-- bikin disini rik pake bootstrap -->
+                <?php if (session()->get('isLoggedIn')): ?>
+                <a href="<?= base_url('/profile') ?>" class="btn btn-outline-secondary w-100 d-block d-lg-none text-center">
+                Profile
+                </a>
+                  
+              <a  id="logoutmobile" onclick="logout()" class=" my-2 text-danger btn btn-outline-danger w-100 d-block d-lg-none text-center hover-text-danger">
+                Logout
+              </a>
+
+
+              <!-- DESKTOP: Dropdown user -->
+              <div class="dropdown d-none d-lg-block">
+                <a href="#" class="nav-link dropdown-toggle text-black d-flex align-items-center" id="userDropdown"
+                  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg width="24" height="24"><use xlink:href="#user"></use></svg>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                  <li><a class="dropdown-item" href="<?= base_url('/profile') ?>">Profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item text-danger" id="logout" onclick="logout()">Logout</a></li>
+                </ul>
+              </div>
+
+                <?php else: ?>
                 <li class="nav-item ms-2"><a style="color: #1b3cde; border-color: #1b3cde;" class="nav-link border bg-white rounded px-3 py-1" href="/auth/register">Sign Up</a></li>
                 <li class="nav-item ms-2"><a style="color: #1b3cde; background-color: #1b3cde; border-color: #1b3cde;" class="nav-link border border-primary text-white rounded px-3 py-1" href="/auth/login">Login</a></li>
+                <?php endif; ?>
               </ul>
             </div>
           </div>  
@@ -94,4 +119,21 @@
     </div>
   </div>
 </header>
+
+<script>
+  function logout() {
+    $.ajax({
+      url: '/api/v1/auth/logout',
+      type: 'POST',
+      dataType: 'json',
+      success: function(response) {
+        alert(response.message);
+        window.location.href = '/';
+      },
+      error: function() {
+        alert('An error occurred while logging out. Please try again.');
+      }
+    });
+  }
+</script>
 

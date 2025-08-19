@@ -4,12 +4,12 @@
 # Content-Type: application/json
 
 # {
-#     "username": "users",
-#     "email": "users@example.com",
+#     "username": "admin",
+#     "email": "admin@example.com",
 #     "alamat": "123 Main St",
 #     "no_handphone": "123456789101112",
 #     "avatar_url": "http://example.com/avatar.jpg",
-#     "role": "user",
+#     "role": "admin",
 #     "password": "password",
 #     "confirm_password": "password"
 # }
@@ -107,4 +107,9 @@
 # Content-Type: application/json
 
 # GET http://localhost:8080/api/v1/layanan/countlayanan
+# Content-Type: application/json
+
+# review
+
+# GET http://localhost:8080/api/v1/review/layanan/1
 # Content-Type: application/json

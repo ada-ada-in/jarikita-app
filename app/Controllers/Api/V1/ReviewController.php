@@ -3,7 +3,7 @@ namespace App\Controllers\Api\v1;
 use App\Services\ReviewServices;
 use CodeIgniter\RESTful\ResourceController;
 
-class ReviewControllerController extends ResourceController {
+class ReviewController extends ResourceController {
     protected $reviewServices;
 
     public function __construct() {
@@ -47,6 +47,23 @@ class ReviewControllerController extends ResourceController {
 
             try {
                 $data = $this->reviewServices->getReviewDataServices();
+        
+                return $this->respond([
+                    'data' => $data,
+                    'message' => 'Data retrieved successfully'
+                ], 200);
+        
+            } catch (\Exception $e) {
+                return $this->fail([
+                    $e->getMessage()
+                ]);
+            }
+    }
+
+    public function getDataReviewByLayanan($id){
+
+            try {
+                $data = $this->reviewServices->getReviewDataLayananServices($id);
         
                 return $this->respond([
                     'data' => $data,

@@ -8,7 +8,7 @@
      */
 
     // admin pages
-    $routes->group('admin', static function($routes) {
+    $routes->group('admin', ['filter' => 'admin'], static function($routes) {
         $routes->get('dashboard', 'PagesController::admin', ['as' => 'admin']);
         $routes->get('log', 'PagesController::log', ['as' => 'log']);
         $routes->get('jasa', 'PagesController::jasa', ['as' => 'jasa']);
@@ -19,7 +19,7 @@
     });
 
     // seller pages
-    $routes->group('users', static function($routes) {
+    $routes->group('users', ['filter' => 'seller'], static function($routes) {
         $routes->get('dashboard', 'PagesController::dashboardSeller', ['as' => 'dashboardSeller']);
         $routes->get('jasa', 'PagesController::jasaSeller', ['as' => 'jasaSeller']);
         $routes->get('profile', 'PagesController::profileSeller', ['as' => 'profileSeller']);
@@ -81,6 +81,7 @@
          $routes->group('review', static function($routes) {
             $routes->post('', 'Api\V1\ReviewController::createReview', ['as' => 'api.review.createReview']);
             $routes->get('', 'Api\V1\ReviewController::getDataReview', ['as' => 'api.review.getDataReview']);
+            $routes->get('layanan/(:num)', 'Api\V1\ReviewController::getDataReviewByLayanan/$1', ['as' => 'api.review.getDataReviewByLayanan']);
             $routes->get('countreview', 'Api\V1\ReviewController::countReview',     ['as' => 'api.review.countReview']);
             $routes->get('(:num)', 'Api\V1\ReviewController::getDataReviewById/$1', ['as' => 'api.review.getDataReviewById']);
             $routes->delete('(:num)', 'Api\V1\ReviewController::deleteDataReviewById/$1', ['as' => 'api.review.deleteDataReviewById']);

@@ -15,8 +15,8 @@ class ReviewServices {
     public function createReviewServices(array $data){
 
     $rules = [
-            'users_id'    => [
-                'label' => 'users_id',
+            'user_id'    => [
+                'label' => 'user_id',
                 'rules' => 'required'
             ],
             'layanan_id'       => [
@@ -40,7 +40,7 @@ class ReviewServices {
         }
 
         $this->reviewModel->insert([
-            'users_id'    => $data['users_id'],
+            'user_id'    => $data['user_id'],
             'layanan_id'       => $data['layanan_id'],
             'komentar' => $data['komentar']
         ]);
@@ -58,7 +58,30 @@ class ReviewServices {
     {
         
         $ReviewData = new ReviewModel();
-        $data = $ReviewData->orderBy('created_at', 'DESC')->findAll();
+        $data = $ReviewData
+        ->select('review.*, users.username as username, users.email as email, users.alamat as alamat, users.no_handphone as no_handphone, users.avatar_url as upload_url')
+        ->join('users', 'users.id = review.user_id', 'left')
+        ->orderBy('created_at', 'DESC')->findAll();
+
+        if(empty($data)){
+            return [
+                'status'  => true,
+                'message' => 'data is empty'
+            ];
+        }
+
+        return $data;
+    }
+
+    public function getReviewDataLayananServices($id)
+    {
+        
+        $ReviewData = new ReviewModel();
+        $data = $ReviewData
+        ->select('review.*, users.username as username, users.email as email, users.alamat as alamat, users.no_handphone as no_handphone, users.avatar_url as upload_url')
+        ->join('users', 'users.id = review.user_id', 'left')
+        ->where('layanan_id', $id)
+        ->orderBy('created_at', 'DESC')->findAll();
 
         if(empty($data)){
             return [

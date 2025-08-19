@@ -17,11 +17,15 @@ class LogServices {
     $rules = [
             'deskripsi'    => [
                 'label' => 'deskripsi',
-                'rules' => 'required|min_length[2]'
+                'rules' => 'required'
             ],
             'no_handphone'   => [
                 'label' => 'no_handphone',
-                'rules' => 'required|min_length[12]'
+                'rules' => 'required'
+            ],
+            'email'   => [
+                'label' => 'email',
+                'rules' => 'required'
             ]
         ];
 

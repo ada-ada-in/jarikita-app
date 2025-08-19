@@ -103,6 +103,9 @@
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
                                         <i class="dw dw-delete-3"></i> Delete
                                     </button>
+                                    <a class="dropdown-item" href="/profile/${item.id}">
+                                        <i class="dw dw-file-3"></i> View
+                                    </a>
                                 </div>
                             </div>
                         </td>

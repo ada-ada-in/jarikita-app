@@ -12,7 +12,7 @@ class ReviewModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['users_id', 'layanan_id', 'komentar'];
+    protected $allowedFields    = ['user_id', 'layanan_id', 'komentar'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

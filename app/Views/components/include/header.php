@@ -32,7 +32,7 @@
 									<i class="dw dw-user1"></i>
 								</span> Profile
 							</a>
-							<a class="dropdown-item" href="login.html">
+							<a class="dropdown-item" onclick="logout()">
 								<i class="dw dw-logout"></i> Log Out
 							</a>
 						</div>
@@ -58,4 +58,19 @@ $(document).ready(function() {
         }
     });
 });
+
+function logout() {
+    $.ajax({
+      url: '/api/v1/auth/logout',
+      type: 'POST',
+      dataType: 'json',
+      success: function(response) {
+        alert(response.message);
+        window.location.href = '/';
+      },
+      error: function() {
+        alert('An error occurred while logging out. Please try again.');
+      }
+    });
+  }
 </script>

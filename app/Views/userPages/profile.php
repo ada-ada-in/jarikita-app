@@ -13,7 +13,7 @@
       <p class="lead text-muted mb-4" id="bidang_jasa">
         <!-- bidang jasa -->
       </p>
-      <a id="sendlog" href="tel:+6281234567890" class="btn btn-gradient btn-lg shadow d-none d-md-inline-block">
+      <a id="sendlog" href="#" class="btn btn-gradient btn-lg shadow d-none d-md-inline-block">
         <i class="fas fa-phone" id="username"></i> Whatsapp
       </a>
     </div>
@@ -67,7 +67,7 @@
       <!-- Form Tambah Review -->
       <form id="review-form" action="javascript:void(0);" class="p-3 bg-white rounded-lg shadow-sm">
         <div class="form-group mb-2">
-          <input type="text" id="review-input" class="form-control" placeholder="Tulis ulasan Anda..." required>
+          <input type="text" id="review-input" name="komentar" class="form-control" placeholder="Tulis ulasan Anda..." required>
         </div>
         <button type="submit" class="btn btn-gradient btn-block shadow">Kirim</button>
       </form>
@@ -151,8 +151,11 @@
       const email = '<?= session()->get('email') ?>';
       const no_handphone = '<?= session()->get('no_handphone') ?>';
       const username = '<?= session()->get('username') ?>';
+      console.log(id, email, no_handphone, username);
       let namaJasa = '';
       let deskripsi = '';
+      let allReviews = [];  
+      let visibleCount = 3;
       // Ambil data layanan
       $.ajax({
         url: `/api/v1/layanan/${id}`,
@@ -169,39 +172,103 @@
           $('#alamat').text(data.alamat);
           $('#gambar').attr('src', '/' + data.image_url);
           $('#bidang_jasa').text(data.bidang_jasa);
+
+          console.log(data);
+
+          const whatsappLink = `https://api.whatsapp.com/send?phone=${data.no_handphone_user}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
+          $('#sendlog').attr('href', whatsappLink);
+
+          console.log(whatsappLink)
+
         },
         error: function(xhr, status, error) {
           console.error('Error fetching layanan data:', error);
           $('#nama_jasa').text('Layanan tidak ditemukan');
         }
       });
-      
-      $.ajax({
-        url: `api/v1/review/jasa/${id}`,
+
+      const review = () => {
+        $.ajax({
+        url: `/api/v1/review/layanan/${id}`,
         method: "GET",
+        contentType: "application/json",
         dataType: "json",
         success: function(response) {
           const reviews = response.data;
-          const reviewContainer = $('#review-container');
-          reviewContainer.empty();
-        }
+          if (reviews.length === 0) {
+            $('#review-container').html('<p class="text-muted">Belum ada review.</p>');
+            return;
+          }
+          let reviewHtml = '';
+          const toShow = allReviews.slice(0, visibleCount);
+          reviews.forEach(review => {
+            reviewHtml += `
+              <div class="card mb-3 shadow-sm">
+              <div class="d-flex align-items-center p-3">
+                <img src="/${review.upload_url}" alt="User" class="rounded-circle me-3" width="50" height="50">
+                <div>
+                  <p class="mb-2 font-italic text-dark">"${review.komentar}"</p>
+                  <small class="text-muted">- ${review.username} (${review.email})</small>
+                </div>
+              </div>
+            </div>
+            `;
+        }),
+          $('#review-container').html(reviewHtml);
+        },
       })
+      }
+      
+      review();
 
       // Klik kirim log
       $('#sendlog').on('click', function(e) {
         e.preventDefault();
 
+        const formData = {
+          email: email,
+          no_handphone: no_handphone,
+          deskripsi: deskripsi
+        };  
+        console.log(formData);
+
         $.ajax({
           url: `/api/v1/log`,
           type: 'POST',
           dataType: 'json',
-          data: JSON.stringify({
-            email: email,
-            no_handphone: no_handphone,
-            deskripsi: deskripsi
-          }),
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
           success: function(response) {
             console.log('Log entry created:', response.message);
+            window.open($('#sendlog').attr('href'), '_blank');
+          },
+          error: function(xhr, status, error) {
+            console.error('Error creating log entry:', error);
+          }
+        });
+      });
+
+      $('#review-form').on('submit', function(e) {
+        e.preventDefault();
+
+        const formData = {
+          user_id: '<?= session()->get('id') ?>',
+          layanan_id: id,
+          komentar: $('#review-input').val()
+        };  
+
+        console.log(formData);
+
+        $.ajax({
+          url: `/api/v1/review`,
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
+          success: function(response) {
+            console.log('Log entry created:', response.message);
+            review(); 
+
           },
           error: function(xhr, status, error) {
             console.error('Error creating log entry:', error);
@@ -210,52 +277,9 @@
       });
     });
 
-
-    const oldReviews = [
-      { text: "Harga terjangkau, kualitas oke!", name: "Budi" },
-      { text: "Tim sangat profesional.", name: "Rina" },
-      { text: "Hasil renovasi sesuai harapan.", name: "Agus" }
-    ];
-
-    let savedReviews = JSON.parse(localStorage.getItem('reviews')) || [
-      { text: "Pelayanan sangat memuaskan!", name: "Andi" },
-      { text: "Proses cepat dan hasil rapi.", name: "Sinta" }
-    ];
-
-    function addReview(text, name, save = true) {
-      const card = document.createElement('div');
-      card.className = 'card mb-3 shadow-sm';
-      card.innerHTML = `
-        <div class="card-body">
-          <p class="mb-2 font-italic text-dark">"${text}"</p>
-          <small class="text-muted">- ${name}</small>
-        </div>
-      `;
-      document.getElementById('review-container').prepend(card);
-
-      if (save) {
-        savedReviews.unshift({ text, name });
-        localStorage.setItem('reviews', JSON.stringify(savedReviews));
-      }
-    }
-
-    savedReviews.forEach(r => addReview(r.text, r.name, false));
-
-    document.getElementById('review-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const reviewInput = document.getElementById('review-input');
-      const newReview = reviewInput.value.trim();
-      if (newReview) {
-        addReview(newReview, "Pengunjung");
-        reviewInput.value = '';
-      }
-    });
-
-    document.getElementById('load-more').addEventListener('click', function() {
-      oldReviews.forEach(r => addReview(r.text, r.name));
-      this.style.display = 'none';
-    });
+    
   </script>
 
 </body>
 </html>
+

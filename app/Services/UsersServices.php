@@ -170,11 +170,12 @@ class UsersServices {
     public function countUserServices(){
         $userData = new UsersModel();
 
-        $count = $userData->where('role', 'user')->countAllResults();
+        $count = $userData->countAllResults();
 
         return $count;
     
     }
+
 
     public function exportPdfUsers()
     {

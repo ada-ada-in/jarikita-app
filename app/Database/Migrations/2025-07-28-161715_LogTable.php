@@ -11,12 +11,11 @@ class LogTable extends Migration
         $this->forge->addField([
             'id'    => ['type'  => 'INT', 'constraint' => 11, 'auto_increment' => true, 'unsigned' => true],
             'deskripsi'    => ['type' => 'TEXT'],
-            'email' => ['type'  => 'VARCHAR', 'constraint' => 150, 'unique' => true],
+            'email' => ['type'  => 'VARCHAR', 'constraint' => 150],
             'no_handphone' => ['type'  => 'VARCHAR', 'constraint' => 15],
             'created_at'  => ['type' => 'DATETIME', 'null' => true],
             'updated_at'  => ['type' => 'DATETIME', 'null' => true],
         ]);
-
 
         $this->forge->addPrimaryKey('id');
 

@@ -30,6 +30,7 @@
                                     <option value="" selected disabled>Pilih Role</option>
                                     <option value="user">Users</option>
                                     <option value="admin">Admin</option>
+                                    <option value="admin">Penawar Jasa</option>
                                 </select>
                             </div>
                             <div class="col-12 mt-3">
