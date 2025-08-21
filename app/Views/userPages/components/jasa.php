@@ -22,11 +22,16 @@
         <div class="bootstrap-tabs product-tabs">
           <div class="tabs-header d-flex justify-content-between border-bottom my-5">
             <h3>Katalog Jasa</h3>
-            <nav>
-              <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all">All</a>
-              </div>
-            </nav>
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                Sort By
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="sortDropdown" id="sort-options"> 
+                <li>
+                 <a href="/" class="dropdown-item fs-6">All</a>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div class="tab-content" id="nav-tabContent">
@@ -52,16 +57,16 @@
       dataType: "json",
       success: function (response) {
         const jasaList = response.data;
-        console.log(jasaList);
         const jasaContainer = $('#jasa-list');
 
         jasaList.forEach(function (jasa) {
           const jasaItem = `
             <div class="col"> 
               <div class="product-item shadow">
-                <figure>
-                  <a href="/profile/${jasa.id}" title="${jasa.nama_jasa}">
-                    <img src="${jasa.image_url}" alt="${jasa.nama_jasa}">
+                <figure style="width:100%; height:250px; overflow:hidden; display:flex; justify-content:center; align-items:center;">
+                  <a href="/profile/${jasa.id}" title="${jasa.nama_jasa}" style="display:block; width:100%; height:100%;">
+                    <img src="${jasa.image_url}" alt="${jasa.nama_jasa}" 
+                        style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
                   </a>
                 </figure>
                 <h3 class="text-center">${jasa.nama_jasa}</h3>
@@ -77,4 +82,27 @@
       }
     });
   });
+
+
+   $(document).ready(function() {
+        $.ajax({
+          url: "/api/v1/lokasi",
+          method: "GET",
+          dataType: "json",
+          success: function(response) {
+            const lokasiList = response.data;
+            console.log(lokasiList);
+            const lokasiContainer = $('#sort-options');
+            lokasiList.forEach(function(lokasi) {
+              const lokasiItem = `
+              <a href="/lokasi/${lokasi.id}" class="dropdown-item fs-6">${lokasi.lokasi}</a>
+              `;
+              lokasiContainer.append(lokasiItem);
+            });
+          },
+          error: function(xhr) {
+            console.error("Error fetching lokasi data:", xhr);
+          }
+        });
+      });
 </script>

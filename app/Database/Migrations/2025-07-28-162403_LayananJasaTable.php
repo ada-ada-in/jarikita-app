@@ -23,6 +23,7 @@ class LayananJasaTable extends Migration
             'nama_jasa' => ['type'  => 'VARCHAR', 'constraint' => 100],
             'bidang_jasa' => ['type'  => 'VARCHAR', 'constraint' => 200],
             'alamat' => ['type'  => 'VARCHAR', 'constraint' => 200],
+            'discount' => ['type'  => 'INT', 'constraint' => 11],
             'deskripsi' => ['type'  => 'TEXT'],
             'image_url' => ['type'  => 'VARCHAR', 'constraint' => 200],
             'created_at'  => ['type' => 'DATETIME', 'null' => true],

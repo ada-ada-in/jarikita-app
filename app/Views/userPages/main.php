@@ -3,9 +3,12 @@
     <?= view('userPages/layout/header') ?>
   <body>
 
-   <?= view('userPages/layout/navbar') ?>
+  <div>
+    <?= view('userPages/layout/navbar') ?>
+  
+    <?= view('userPages/components/lokasi') ?>
+  </div>
 
-   <?= view('userPages/components/lokasi') ?>
 
    <?= view('userPages/components/jasa') ?>
 

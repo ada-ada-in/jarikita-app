@@ -122,7 +122,7 @@
                                 <div class="input-group custom">
 									<select name="role" id="" class="form-control form-control-lg">
 										<option value="" selected disabled>Pilih Role</option>
-										<option value="user">Pengguna</option>
+										<option value="user">Pengguna Jasa</option>
 										<option value="seller">Penawar Jasa</option>
 									</select>
 								</div>

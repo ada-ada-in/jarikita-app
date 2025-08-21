@@ -58,9 +58,12 @@
     <div class="row py-3 border-bottom align-items-center">
       <!-- Logo -->
       <div class="col-sm-4 col-lg-3 text-center text-sm-start">
-        <div class="main-logo">
+        <div class="main-logo d-flex align-items-center justify-content-center justify-content-sm-start gap-2">
           <a href="/">
             <img src="/template/images/logo-jari-kita.png" alt="logo" class="img-fluid">
+          </a>
+          <a href="/">
+            <img src="/template/images/logobpjs.png" alt="logo" class="img-fluid">
           </a>
         </div>
       </div>
