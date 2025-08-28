@@ -17,7 +17,8 @@
         <i class="fas fa-phone" id="username"></i> Whatsapp
       </a>
     </div>
-    <div class="col-md-6 text-center">
+    <div class="col-md-6 text-center position-relative">
+      <p id="diskon"></p>
       <img id="gambar" src=""
            alt="Gambar Perusahaan"
            class="img-fluid rounded-lg shadow hero-img">
@@ -45,6 +46,7 @@
         <div class="card-body">
         <h4 class="card-title mb-3">📍 Alamat</h4>
         <p class="mb-0" id="alamat"></p>
+        <p class="mb-0 star-rating" id="rating-layanan"></p>
         </div>
         <!-- Google Map Embed -->
         <!-- <div class="map-container">
@@ -69,8 +71,23 @@
         <div class="form-group mb-2">
           <input type="text" id="review-input" name="komentar" class="form-control" placeholder="Tulis ulasan Anda..." required>
         </div>
+
+        <!-- Rating bintang -->
+        <div class="form-group mb-3">
+          <label>Rating:</label>
+          <div id="star-rating" class="star-rating">
+            <span data-value="1">☆</span>
+            <span data-value="2">☆</span>
+            <span data-value="3">☆</span>
+            <span data-value="4">☆</span>
+            <span data-value="5">☆</span>
+          </div>
+          <input type="hidden" id="rating" name="rating" required>
+        </div>
+
         <button type="submit" class="btn btn-gradient btn-block shadow">Kirim</button>
       </form>
+
 
       <!-- Lihat Review Sebelumnya -->
       <button id="load-more" class="btn btn-link mt-2 p-0">⬇ Lihat review sebelumnya...</button>
@@ -87,6 +104,21 @@
   -webkit-text-fill-color: transparent; 
   background-clip: text; 
 }
+
+.star-rating {
+  color: #ffc107;
+}
+
+.star-rating span {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.star-rating span.hover,
+.star-rating span.selected {
+  color: #ffc107; /* kuning */
+}
+
 
 
   .btn-gradient {
@@ -162,6 +194,7 @@
         dataType: 'json',
         success: function(response) {
         const data = response.data; 
+        console.log(data)
         namaJasa = data.nama_jasa;
         deskripsi = `pengguna dengan nama ${username} melakukan penawaran dengan jasa ${namaJasa}`;
 
@@ -172,6 +205,16 @@
           $('#alamat').text(data.alamat);
           $('#gambar').attr('src', '/' + data.image_url);
           $('#bidang_jasa').text(data.bidang_jasa);
+          if(parseInt(data.discount) > 0){
+            $('#diskon').html(`
+              <span class="badge bg-primary text-white position-absolute top-0 start-0 m-4 p-2">
+                Diskon ${data.discount}%
+              </span>
+            `);
+          } else {
+            $('discount').empty();
+          }
+
 
           console.log(data);
 
@@ -186,6 +229,30 @@
           $('#nama_jasa').text('Layanan tidak ditemukan');
         }
       });
+
+       const rating = (id) => {
+        $.ajax({
+        url: `/api/v1/review/rating/${id}`,
+        method: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+          const data = response.data;
+          let stars = '';
+          for (let i = 1; i <= 5; i++) {
+            if (i <= data.average_rating) {
+              stars += "★";
+            } else {
+              stars += "☆";
+            }
+          }
+          $("#rating-layanan").html(stars);
+        },
+      })
+      }
+
+      rating(id);
+
 
       const review = () => {
         $.ajax({
@@ -202,12 +269,17 @@
           let reviewHtml = '';
           const toShow = allReviews.slice(0, visibleCount);
           reviews.forEach(review => {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+              stars += i <= review.rating ? '⭐' : '☆';
+            }
             reviewHtml += `
               <div class="card mb-3 shadow-sm">
               <div class="d-flex align-items-center p-3">
                 <img src="/${review.upload_url}" alt="User" class="rounded-circle me-3" width="50" height="50">
                 <div>
                   <p class="mb-2 font-italic text-dark">"${review.komentar}"</p>
+                  <p class="mb-1">${stars}</p>
                   <small class="text-muted">- ${review.username} (${review.email})</small>
                 </div>
               </div>
@@ -248,13 +320,36 @@
         });
       });
 
+        let selectedRating = 0;
+
+      $('#star-rating span').hover(
+        function() {
+          const value = $(this).data('value');
+          $('#star-rating span').each(function() {
+            $(this).toggleClass('hover', $(this).data('value') <= value);
+          });
+        },
+        function() {
+          $('#star-rating span').removeClass('hover');
+        }
+      );
+
+      $('#star-rating span').click(function() {
+        selectedRating = $(this).data('value');
+        $('#rating').val(selectedRating);
+        $('#star-rating span').each(function() {
+          $(this).toggleClass('selected', $(this).data('value') <= selectedRating);
+        });
+      });
+
       $('#review-form').on('submit', function(e) {
         e.preventDefault();
 
         const formData = {
           user_id: '<?= session()->get('id') ?>',
           layanan_id: id,
-          komentar: $('#review-input').val()
+          komentar: $('#review-input').val(),
+           rating: selectedRating
         };  
 
         console.log(formData);
@@ -266,9 +361,11 @@
           contentType: 'application/json',
           data: JSON.stringify(formData),
           success: function(response) {
-            console.log('Log entry created:', response.message);
-            review(); 
-
+            $('#review-input').val('');
+            selectedRating = 0;
+            $('#rating').val('');
+            $('#star-rating span').removeClass('selected');
+            review();
           },
           error: function(xhr, status, error) {
             console.error('Error creating log entry:', error);

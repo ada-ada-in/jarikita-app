@@ -12,7 +12,7 @@ class LayananJasaModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['user_id', 'lokasi_id','bidang_jasa', 'nama_jasa', 'alamat', 'deskripsi', 'image_url'];
+    protected $allowedFields    = ['user_id', 'discount', 'lokasi_id','bidang_jasa', 'nama_jasa', 'alamat', 'deskripsi', 'image_url'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

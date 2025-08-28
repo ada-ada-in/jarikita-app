@@ -79,7 +79,20 @@
 								</div>
                                 <div class="input-group custom">
 									<input
-										type="email"
+										type="number"
+										class="form-control form-control-lg"
+										placeholder="No. PP"
+										name="nopp"
+									/>
+									<div class="input-group-append custom">
+										<span class="input-group-text"
+											><i class="icon-copy dw dw-file"></i
+										></span>
+									</div>
+								</div>
+                                <div class="input-group custom">
+									<input
+										type="text"
 										class="form-control form-control-lg"
 										placeholder="Email"
 										name="email"

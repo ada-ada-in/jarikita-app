@@ -37,6 +37,12 @@
 							</a>
 						</li>
 						<li class="dropdown">
+							<a href="<?= url_to('bannerpromo') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-archive"></span
+								><span class="mtext">Banner Promo</span>
+							</a>
+						</li>
+						<li class="dropdown">
 							<a href="<?= url_to('pengguna') ?>" class="dropdown-toggle no-arrow">
 								<span class="micon dw dw-user1"></span
 								><span class="mtext">Pengguna</span>

@@ -77,6 +77,24 @@ class ReviewController extends ResourceController {
             }
     }
 
+    public function getDataRatingByLayanan($id){
+
+            try {
+                $data = $this->reviewServices->getRatingDataServices($id);
+        
+                return $this->respond([
+                    'data' => $data,
+                    'message' => 'Data retrieved successfully'
+                ], 200);
+        
+            } catch (\Exception $e) {
+                return $this->fail([
+                    $e->getMessage()
+                ]);
+            }
+    }
+
+
     public function getDataReviewById($id){
         try {
     

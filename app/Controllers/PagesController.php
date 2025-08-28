@@ -28,6 +28,10 @@ class PagesController extends BaseController
     {
         return view('pages/profile');
     }
+    public function bannerpromo(): string 
+    {
+        return view('pages/bannerpromo');
+    }
 
 
     // users
@@ -58,6 +62,14 @@ class PagesController extends BaseController
     public function profileSeller(): string
     {
         return view('sellerPages/profile');
+    }
+
+    // staff
+    public function dashboardStaff(): string {
+        return view('staffpages/dashboard');
+    }
+    public function tanggunganStaff(): string {
+        return view('staffpages/tanggungan');
     }
 
 

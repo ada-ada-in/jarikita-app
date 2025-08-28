@@ -73,9 +73,10 @@
           const jasaItem = `
             <div class="col"> 
               <div class="product-item shadow">
-                <figure>
-                  <a href="/profile/${jasa.id}" title="${jasa.nama_jasa}">
-                    <img src="/${jasa.image_url}" alt="${jasa.nama_jasa}">
+                <figure style="width:100%; height:250px; overflow:hidden; display:flex; justify-content:center; align-items:center;">
+                  <a href="/profile/${jasa.id}" title="${jasa.nama_jasa}" style="display:block; width:100%; height:100%;">
+                    <img src="/${jasa.image_url}" alt="${jasa.nama_jasa}" 
+                        style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
                   </a>
                 </figure>
                 <h3 class="text-center">${jasa.nama_jasa}</h3>

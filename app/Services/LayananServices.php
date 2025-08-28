@@ -58,7 +58,8 @@ class LayananServices {
             'bidang_jasa' => $data['bidang_jasa'],
             'alamat' => $data['alamat'],
             'image_url' => $data['image_url'],
-            'deskripsi' => $data['deskripsi']
+            'deskripsi' => $data['deskripsi'],
+            'discount' => $data['discount']
         ]);
 
 
@@ -75,7 +76,7 @@ class LayananServices {
         
         $LayananData = new LayananJasaModel();
         $data = $LayananData
-        ->select('layanan_jasa.*, users.username as username_user, users.email as email_user, users.alamat as alamat_user, users.no_handphone as no_handphone_user')
+        ->select('layanan_jasa.*, users.username as username_user, users.email as email_user, users.alamat as alamat_user, users.no_handphone as no_handphone_user, users.nopp as nopp_user, users.bpjs_status_pembayaran as bpjs_status_pembayaran_user, users.bpjs_pembayaran as bpjs_pembayaran_user')
         ->join('users', 'users.id = layanan_jasa.user_id', 'left')
         ->select('layanan_jasa.*, lokasi.lokasi as nama_lokasi')
         ->join('lokasi', 'lokasi.id = layanan_jasa.lokasi_id', 'left')

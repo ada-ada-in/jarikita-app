@@ -15,6 +15,7 @@
         $routes->get('disposisi', 'PagesController::disposisi', ['as' => 'disposisi']);
         $routes->get('pengguna', 'PagesController::pengguna', ['as' => 'pengguna']);
         $routes->get('lokasi', 'PagesController::lokasi', ['as' => 'lokasi']);
+        $routes->get('bannerpromo', 'PagesController::bannerpromo', ['as' => 'bannerpromo']);
         $routes->get('profile', 'PagesController::profile', ['as' => 'profile']);
     });
 
@@ -23,6 +24,12 @@
         $routes->get('dashboard', 'PagesController::dashboardSeller', ['as' => 'dashboardSeller']);
         $routes->get('jasa', 'PagesController::jasaSeller', ['as' => 'jasaSeller']);
         $routes->get('profile', 'PagesController::profileSeller', ['as' => 'profileSeller']);
+    });
+
+    // staff pages
+    $routes->group('staff', static function($routes) {
+        $routes->get('dashboard', 'PagesController::dashboardStaff', ['as' => 'dashboardStaff']);
+        $routes->get('tanggungan', 'PagesController::tanggunganStaff', ['as' => 'tanggunganStaff']);
     });
 
     // users pages
@@ -81,6 +88,7 @@
          $routes->group('review', static function($routes) {
             $routes->post('', 'Api\V1\ReviewController::createReview', ['as' => 'api.review.createReview']);
             $routes->get('', 'Api\V1\ReviewController::getDataReview', ['as' => 'api.review.getDataReview']);
+            $routes->get('rating/(:num)', 'Api\V1\ReviewController::getDataRatingByLayanan/$1', ['as' => 'api.review.getDataRatingByLayanan']);
             $routes->get('layanan/(:num)', 'Api\V1\ReviewController::getDataReviewByLayanan/$1', ['as' => 'api.review.getDataReviewByLayanan']);
             $routes->get('countreview', 'Api\V1\ReviewController::countReview',     ['as' => 'api.review.countReview']);
             $routes->get('(:num)', 'Api\V1\ReviewController::getDataReviewById/$1', ['as' => 'api.review.getDataReviewById']);
@@ -100,4 +108,25 @@
             $routes->post('(:num)', 'Api\V1\LayananController::updateDataLayananById/$1', ['as' => 'api.layanan.updateDataLayananById']);
         });
 
-    });
+         $routes->group('jenisjasa', static function($routes) {
+            $routes->post('', 'Api\V1\JenisJasaController::createJenisJasa', ['as' => 'api.jenisjasa.createJenisJasa']);
+            $routes->get('', 'Api\V1\JenisJasaController::getDataJenisJasa', ['as' => 'api.jenisjasa.getDataJenisJasa']);
+            $routes->get('lokasi/(:num)', 'Api\V1\JenisJasaController::getDataJenisJasaByLokasiId/$1', ['as' => 'api.jenisjasa.getDataJenisJasaByLokasiId']);
+            $routes->get('countjenisjasa', 'Api\V1\JenisJasaController::countJenisJasa',     ['as' => 'api.jenisjasa.countJenisJasa']);
+            $routes->get('countjenisjasa/users', 'Api\V1\JenisJasaController::countJenisJasaByUsers',     ['as' => 'api.jenisjasa.countJenisJasaByUsers']);
+            $routes->get('(:num)', 'Api\V1\JenisJasaController::getDataJenisJasaById/$1', ['as' => 'api.jenisjasa.getDataJenisJasaById']);
+            $routes->delete('(:num)', 'Api\V1\JenisJasaController::deleteDataJenisJasaById/$1', ['as' => 'api.jenisjasa.deleteDataJenisJasaById']);
+            $routes->post('(:num)', 'Api\V1\JenisJasaController::updateDataJenisJasaById/$1', ['as' => 'api.jenisjasa.updateDataJenisJasaById']);
+        });
+
+         $routes->group('bannerpromo', static function($routes) {
+            $routes->post('', 'Api\V1\BannerPromoController::createBannerPromo', ['as' => 'api.bannerpromo.createBannerPromo']);
+            $routes->get('', 'Api\V1\BannerPromoController::getDataBannerPromo', ['as' => 'api.bannerpromo.getDataBannerPromo']);
+            $routes->get('countbannerpromo', 'Api\V1\BannerPromoController::countBannerPromo',     ['as' => 'api.bannerpromo.countBannerPromo']);
+            $routes->get('countbannerpromo/users', 'Api\V1\BannerPromoController::countBannerPromoByUsers',     ['as' => 'api.bannerpromo.countBannerPromoByUsers']);
+            $routes->get('(:num)', 'Api\V1\BannerPromoController::getDataBannerPromoById/$1', ['as' => 'api.bannerpromo.getDataBannerPromoById']);
+            $routes->delete('(:num)', 'Api\V1\BannerPromoController::deleteDataBannerPromoById/$1', ['as' => 'api.bannerpromo.deleteDataBannerPromoById']);
+            $routes->post('(:num)', 'Api\V1\BannerPromoController::updateDataBannerPromoById/$1', ['as' => 'api.bannerpromo.updateDataBannerPromoById']);
+        });
+
+    }); 

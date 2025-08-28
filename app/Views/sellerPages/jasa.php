@@ -39,6 +39,7 @@
 										<th class="table-plus datatable-nosort">No.</th>
 										<th>Nama</th>
 										<th>Nama Jasa</th>
+										<th>Discount</th>
 										<th>Email</th>
 										<th>Nomor Handphone</th>
 										<th>Lokasi</th>
@@ -76,6 +77,7 @@
                         <td class="table-plus">${start + i + 1}</td>
                         <td>${item.username_user}</td>
                         <td>${item.nama_jasa}</td>
+                        <td>${item.discount}</td>
                         <td>${item.email_user}</td>
                         <td>${item.no_handphone_user}</td>
                         <td>${item.nama_lokasi}</td>
@@ -92,6 +94,7 @@
                                         data-lokasi_id="${item.lokasi_id}"
                                         data-deskripsi="${item.deskripsi}"
                                         data-nama_jasa="${item.nama_jasa}"
+                                        data-discount="${item.discount}"
                                         data-image_url="${item.image_url}"
                                         data-nama_email_user="${item.nama_email_user}"
                                         data-no_handphone_user="${item.no_handphone_user}"
@@ -243,6 +246,7 @@
             $('#editjasamodal input[name="user_id"]').val(button.data('user_id'));
             $('#editjasamodal select[name="lokasi_id"]').val(button.data('lokasi_id')).trigger('change');
             $('#editjasamodal input[name="nama_jasa"]').val(button.data('nama_jasa'));
+            $('#editjasamodal input[name="discount"]').val(button.data('discount'));
             $('#editjasamodal input[name="alamat"]').val(button.data('alamat'));
             $('#editjasamodal input[name="image"]').val(button.data('image_url'));
             $('#editjasamodal textarea[name="deskripsi"]').val(button.data('deskripsi'));
@@ -263,6 +267,7 @@
             processData: false,
 			contentType: false, 
             success: function (response) {
+                console.log(response.data)
                 alert(response.message);
                 $('#editjasamodal').modal('hide');
                 loadData();

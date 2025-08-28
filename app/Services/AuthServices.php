@@ -23,6 +23,10 @@ class AuthServices {
                 'label' => 'email',
                 'rules' => 'required|valid_email|is_unique[users.email]'
             ],
+            'nopp'       => [
+                'label' => 'nopp',
+                'rules' => 'required'
+            ],
             'alamat' => [
                 'label' => 'alamat',
                 'rules' => 'required|min_length[3]'
@@ -65,6 +69,7 @@ class AuthServices {
             'username'    => $data['username'],
             'email'       => $data['email'],
             'alamat'    => $data['alamat'],
+            'nopp'    => $data['nopp'],
             'no_handphone' => $data['no_handphone'],
             'avatar_url'   => $data['avatar_url'],
             'role'   => $data['role'],

@@ -26,6 +26,10 @@ class ReviewServices {
             'komentar'   => [
                 'label' => 'komentar',
                 'rules' => 'required'
+            ],
+            'rating'   => [
+                'label' => 'rating',
+                'rules' => 'required|in_list[1,2,3,4,5]'
             ]
         ];
 
@@ -42,7 +46,8 @@ class ReviewServices {
         $this->reviewModel->insert([
             'user_id'    => $data['user_id'],
             'layanan_id'       => $data['layanan_id'],
-            'komentar' => $data['komentar']
+            'komentar' => $data['komentar'],
+            'rating' => $data['rating']
         ]);
 
 
@@ -62,6 +67,26 @@ class ReviewServices {
         ->select('review.*, users.username as username, users.email as email, users.alamat as alamat, users.no_handphone as no_handphone, users.avatar_url as upload_url')
         ->join('users', 'users.id = review.user_id', 'left')
         ->orderBy('created_at', 'DESC')->findAll();
+
+        if(empty($data)){
+            return [
+                'status'  => true,
+                'message' => 'data is empty'
+            ];
+        }
+
+        return $data;
+    }
+
+    public function getRatingDataServices($layanan_id)
+    {
+        
+        $ReviewData = new ReviewModel();
+        $data = $ReviewData
+        ->select('AVG(rating) as average_rating, COUNT(*) as total_reviews')
+        ->where('layanan_id', $layanan_id)
+        ->first();
+
 
         if(empty($data)){
             return [

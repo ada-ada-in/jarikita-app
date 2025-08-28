@@ -3,16 +3,8 @@
 
       <div class="row my-5">
         <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/10/Discount-Banner-Design-Template-Graphics-51400296-1.jpg" class="d-block w-100" style="height:400px; object-fit:cover;"  alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/10/Discount-Banner-Design-Template-Graphics-51400296-1.jpg" class="d-block w-100" style="height:400px; object-fit:cover;" alt="...">
-            </div>
-            <div class="carousel-item">
-              <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/10/Discount-Banner-Design-Template-Graphics-51400296-1.jpg" class="d-block w-100" style="height:400px; object-fit:cover;" alt="...">
-            </div>
+          <div class="carousel-inner" id="banner-list">
+           <!-- banner list -->
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -25,10 +17,10 @@
         </div>
       </div>
 
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-12">
 
-            <div class="section-header d-flex flex-wrap justify-content-between mb-1">
+            <div class="section-header d-flex flex-wrap justify-content-between">
               <h2 class="section-title">Jenis Jasa</h2>
 
               <div class="d-flex align-items-center">
@@ -42,6 +34,7 @@
             
           </div>
         </div>
+        
         <div class="row">
           <div class="col-md-12">
 
@@ -52,13 +45,43 @@
             </div>
 
           </div>
-        </div>
+        </div> -->
+
+
       </div>
     </section>
 
 
     <script>
       $(document).ready(function() {
+
+        //  <div class="carousel-item active">
+        //     <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/10/Discount-Banner-Design-Template-Graphics-51400296-1.jpg" class="d-block w-100" style="height:400px; object-fit:cover;"  alt="...">
+        //   </div>
+
+        $.ajax({
+          url: "/api/v1/bannerpromo",
+          method: "GET",
+          dataType: "json",
+          success: function(response) {
+            const bannerList = response.data;
+            console.log(bannerList);
+            const bannerContainer = $('#banner-list');
+            bannerList.forEach(function(banner, index) {
+              const isActive = index === 0 ? 'active' : '';
+              const bannerItem = `
+                <div class="carousel-item ${isActive}">
+                  <img src="${banner.image_link}" class="d-block w-100" style="height:400px; object-fit:cover;"  alt="...">
+                </div>
+              `;
+              bannerContainer.append(bannerItem);
+            });
+          },
+          error: function(xhr) {
+            console.error("Error fetching banner data:", xhr);
+          }
+        })
+
         $.ajax({
           url: "/api/v1/lokasi",
           method: "GET",
