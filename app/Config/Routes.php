@@ -33,11 +33,13 @@
         $routes->get('tanggungan', 'PagesController::tanggunganStaff', ['as' => 'tanggunganStaff']);
         $routes->get('log', 'PagesController::logStaff', ['as' => 'logStaff']);
         $routes->get('jasa', 'PagesController::jasaStaff', ['as' => 'jasaStaff']);
+        $routes->get('profile', 'PagesController::profileStaff', ['as' => 'profileStaff']);
     });
 
     // users pages
     $routes->group('/', static function($routes){
         $routes->get('', 'PagesController::main', ['as' => 'main']);
+        $routes->get('userprofile', 'PagesController::userprofile', ['as' => 'userprofile']);
         $routes->get('profile/(:num)', 'PagesController::profilejasa/$ ', ['as' => 'profilejasa']);
         $routes->get('lokasi/(:num)', 'PagesController::lokasijasa/$1', ['as' => 'lokasijasa']);
     });

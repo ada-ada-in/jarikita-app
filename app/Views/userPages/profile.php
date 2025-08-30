@@ -32,8 +32,8 @@
       <p class="text-muted mb-4 px-md-5" id="deksripsi">
         <!-- deskripsi -->
       </p>
-      <a href="tel:+6281234567890" class="btn btn-gradient btn-lg shadow d-inline-block d-md-none">
-        <i class="fas fa-phone"></i> Hubungi: +62 812-3456-7890
+      <a id="sendlogmobile" href="#" class="btn btn-gradient btn-lg shadow d-inline-block d-md-none">
+        <i class="fas fa-phone" id="username"></i> Whatsapp
       </a>
     </div>
   </div>
@@ -187,8 +187,6 @@
       console.log(id, email, no_handphone, username);
       let namaJasa = '';
       let deskripsi = '';
-      let allReviews = [];  
-      let visibleCount = 3;
       // Ambil data layanan
       $.ajax({
         url: `/api/v1/layanan/${id}`,
@@ -216,13 +214,10 @@
             $('discount').empty();
           }
 
-
-          console.log(data);
-
           const whatsappLink = `https://api.whatsapp.com/send?phone=${data.no_handphone_user}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
           $('#sendlog').attr('href', whatsappLink);
-
-          console.log(whatsappLink)
+          const whatsappLinkMobile = `https://api.whatsapp.com/send?phone=${data.no_handphone_user}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
+          $('#sendlogmobile').attr('href', whatsappLink);
 
         },
         error: function(xhr, status, error) {
@@ -255,55 +250,93 @@
       rating(id);
 
 
-      const review = () => {
-        $.ajax({
-        url: `/api/v1/review/layanan/${id}`,
-        method: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        success: function(response) {
-          const reviews = response.data;
-          if (reviews.length === 0) {
-            $('#review-container').html('<p class="text-muted">Belum ada review.</p>');
-            return;
-          }
+        let allReviews = [];  
+        let visibleCount = 5; // tampilkan 5 dulu
+
+        const review = () => {
+          $.ajax({
+            url: `/api/v1/review/layanan/${id}`,
+            method: "GET",
+            contentType: "application/json",
+            dataType: "json",
+            success: function(response) {
+              allReviews = response.data; // simpan semua review di array global
+
+              if (allReviews.length === 0) {
+                $('#review-container').html('<p class="text-muted">Belum ada review.</p>');
+                $('#load-more').hide();
+                return;
+              }
+
+              renderReviews(); // render awal
+            },
+          });
+        };
+
+        // fungsi render berdasarkan visibleCount
+        const renderReviews = () => {
           let reviewHtml = '';
-          const toShow = allReviews.slice(0, visibleCount);
-          reviews.forEach(review => {
+          const toShow = allReviews.slice(0, visibleCount); // ambil sesuai visibleCount
+
+          toShow.forEach(review => {
             let stars = '';
             for (let i = 1; i <= 5; i++) {
               stars += i <= review.rating ? '⭐' : '☆';
             }
             reviewHtml += `
               <div class="card mb-3 shadow-sm">
-              <div class="d-flex align-items-center p-3">
-                <img src="/${review.upload_url}" alt="User" class="rounded-circle me-3" width="50" height="50">
-                <div>
-                  <p class="mb-2 font-italic text-dark">"${review.komentar}"</p>
-                  <p class="mb-1">${stars}</p>
-                  <small class="text-muted">- ${review.username} (${review.email})</small>
+                <div class="d-flex align-items-center p-3">
+                  <img src="/${review.upload_url}" alt="User" class="rounded-circle me-3" width="50" height="50">
+                  <div>
+                    <p class="mb-2 font-italic text-dark">"${review.komentar}"</p>
+                    <p class="mb-1">${stars}</p>
+                    <small class="text-muted">- ${review.username} (${review.email})</small>
+                  </div>
                 </div>
               </div>
-            </div>
             `;
-        }),
+          });
+
           $('#review-container').html(reviewHtml);
-        },
-      })
-      }
-      
-      review();
+
+          // sembunyikan tombol load-more kalau semua review sudah ditampilkan
+          if (visibleCount >= allReviews.length) {
+            $('#load-more').hide();
+          } else {
+            $('#load-more').show();
+          }
+        };
+
+        // event klik tombol load-more
+        $('#load-more').on('click', function() {
+          visibleCount += 5; // tambah 5 lagi
+          renderReviews();
+        });
+
+        review(); // panggil pertama kali
+
+
+     const role = '<?= session()->get('role') ?>';
 
       // Klik kirim log
       $('#sendlog').on('click', function(e) {
         e.preventDefault();
 
-        const formData = {
+      if(!role || role == 'undifiened' || role == 'null') {
+        window.location.href = '/auth/login';
+        return;
+      }
+      if( role !== 'user') {
+        alert('Hanya pengguna yang dapat menghubungi via whatsapp.');
+        return;
+      }
+        
+
+          const formData = {
           email: email,
           no_handphone: no_handphone,
           deskripsi: deskripsi
         };  
-        console.log(formData);
 
         $.ajax({
           url: `/api/v1/log`,
@@ -348,8 +381,20 @@
         });
       });
 
+
       $('#review-form').on('submit', function(e) {
         e.preventDefault();
+        
+        if (role === 'undifiened' || role === 'null' || !role) {
+          window.location.href = '/auth/login';
+          return;
+        }
+        
+        if( role !== 'user') {
+          alert('Hanya pengguna yang dapat memberikan review.');
+          return;
+        }
+
 
         const formData = {
           user_id: '<?= session()->get('id') ?>',

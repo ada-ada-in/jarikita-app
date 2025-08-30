@@ -29,7 +29,7 @@
             <h3>Katalog Jasa</h3>
             <div class="dropdown">
               <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                Sort By
+                Lokasi
               </button>
               <ul class="dropdown-menu" aria-labelledby="sortDropdown" id="sort-options"> 
                 <li><a href="/" class="dropdown-item fs-6">All</a></li>

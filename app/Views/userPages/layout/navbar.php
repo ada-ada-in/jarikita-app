@@ -87,26 +87,65 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <!-- bikin disini rik pake bootstrap -->
-                <?php if (session()->get('isLoggedIn')): ?>
-                <a href="<?= base_url('/profile') ?>" class="btn btn-outline-secondary w-100 d-block d-lg-none text-center">
+
+                <?php if(session()->get('role') === 'admin'): ?>
+                <a href="<?= base_url('/admin/dashboard') ?>" class="btn btn-outline-secondary w-100 d-block d-lg-none text-center mb-2">
+                Dashboard
+                </a>
+                <?php endif; ?>
+
+                <?php if(session()->get('role') === 'seller'): ?>
+                <a href="<?= base_url('/users/dashboard') ?>" class="btn btn-outline-secondary w-100 d-block d-lg-none text-center mb-2">
+                Dashboard
+                </a>
+                <?php endif; ?>
+
+                <?php if(session()->get('role') === 'staff'): ?>
+                <a href="<?= base_url('/staff/dashboard') ?>" class="btn btn-outline-secondary w-100 d-block d-lg-none text-center mb-2">
+                Dashboard
+                </a>
+                <?php endif; ?>
+
+                <?php if(session()->get('role') === 'user'): ?>
+                <a href="<?= base_url('/userprofile') ?>" class="btn btn-outline-secondary w-100 d-block d-lg-none text-center">
                 Profile
                 </a>
-                  
-              <a  id="logoutmobile" onclick="logout()" class=" my-2 text-danger btn btn-outline-danger w-100 d-block d-lg-none text-center hover-text-danger">
-                Logout
-              </a>
+                <?php endif; ?>
+                
+
+                <?php if (session()->get('isLoggedIn')): ?>
+                <a  id="logoutmobile" onclick="logout()" style="background-color: red; color: white;" class=" my-2 text-danger btn btn-danger w-100 d-block d-lg-none text-center hover-text-danger">
+                  Logout
+                </a>
 
 
               <!-- DESKTOP: Dropdown user -->
               <div class="dropdown d-none d-lg-block">
                 <a href="#" class="nav-link dropdown-toggle text-black d-flex align-items-center" id="userDropdown"
                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <svg width="24" height="24"><use xlink:href="#user"></use></svg>
+
+                  <!-- Ganti icon dengan foto profile -->
+                  <img src="<?= session()->get('avatar_url'); ?>" 
+                      alt="Profile" 
+                      width="56" height="56" 
+                      class="rounded-circle">
+
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                  <li><a class="dropdown-item" href="<?= base_url('/profile') ?>">Profile</a></li>
+                  <?php if(session()->get('role') === 'staff'): ?>
+                  <li><a class="dropdown-item" href="<?= base_url('/staff/dashboard') ?>">Dashboard</a></li>
+                   <?php endif; ?>
+                  <?php if(session()->get('role') === 'admin'): ?>
+                  <li><a class="dropdown-item" href="<?= base_url('/admin/dashboard') ?>">Dashboard</a></li>
+                   <?php endif; ?>
+                  <?php if(session()->get('role') === 'seller'): ?>
+                  <li><a class="dropdown-item" href="<?= base_url('/users/dashboard') ?>">Dashboard</a></li>
+                   <?php endif; ?>
+                  <?php if(session()->get('role') === 'user'): ?>
+                  <li><a class="dropdown-item" href="<?= base_url('/userprofile') ?>">Profile</a></li>
+                   <?php endif; ?>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item text-danger" id="logout" onclick="logout()">Logout</a></li>
+                  <li><a class="dropdown-item" style="color: red;" id="logout" onclick="logout()">Logout</a></li>
                 </ul>
               </div>
 

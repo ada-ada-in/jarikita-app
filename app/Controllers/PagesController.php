@@ -43,15 +43,17 @@ class PagesController extends BaseController
     {
         return view('userPages/main');
     }
-
     public function profilejasa(): string
     {
         return view('userPages/profile');
     }
-
     public function lokasijasa(): string
     {
         return view('userPages/lokasi');
+    }
+    public function userprofile(): string
+    {
+        return view('userPages/userprofile');
     }
 
     // seller
@@ -80,6 +82,9 @@ class PagesController extends BaseController
     }
     public function jasaStaff(): string {
         return view('staffpages/jasa');
+    }
+    public function profileStaff(): string {
+        return view('staffpages/profile');
     }
 
 

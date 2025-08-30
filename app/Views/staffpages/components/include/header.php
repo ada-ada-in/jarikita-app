@@ -27,7 +27,7 @@
 							<span id="user-name"></span>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-							<a class="dropdown-item" href="<?= url_to('profile') ?>">
+							<a class="dropdown-item" href="<?= url_to('profileStaff') ?>">
 								<span class="user-icon">
 									<i class="dw dw-user1"></i>
 								</span> Profile

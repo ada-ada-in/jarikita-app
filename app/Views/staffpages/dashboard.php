@@ -13,7 +13,7 @@
 								<div class="widget-data">
 									<div class="weight-700 font-24 text-dark" id="layanan"></div>
 									<div class="font-14 text-secondary weight-500">
-										Tanngungan Pembayaran
+										Data Pengguna
 									</div>
 								</div>
 								<div class="widget-icon">
@@ -35,11 +35,12 @@
 <script>
 	$(document).ready(function() {
 		$.ajax({
-			url: "/api/v1/layanan/countlayanan/users",
+			url: "/api/v1/users/countuser",
 			method: "GET",
 			dataType: "json",
 			success: function(response) {	
 				const data = response.data;
+				console.log(data);
 				$('#layanan').text(data);
 			},
 			error: function(xhr) {

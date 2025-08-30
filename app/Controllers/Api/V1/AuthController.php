@@ -96,7 +96,8 @@ class AuthController extends ResourceController {
                 'message' => $result['message'],
                 'role' => $result['role'],
                 'id' => $result['id'],
-                'username' => $result['username']
+                'username' => $result['username'],
+                'avatar_url' => $result['avatar_url'],
             ]);
 
         } catch (\Exception $e) {

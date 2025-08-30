@@ -114,6 +114,7 @@ class AuthServices {
                 'email' => $user['email'],
                 'username' => $user['username'],
                 'no_handphone' => $user['no_handphone'],
+                'avatar_url' => $user['avatar_url'],
                 'isLoggedIn' => true
             ]); 
 
@@ -124,7 +125,8 @@ class AuthServices {
                 'username' => $user['username'],
                 'id' => $user['id'],
                 'email' => $user['email'],
-                'no_handphone' => $user['no_handphone']
+                'no_handphone' => $user['no_handphone'],
+                'avatar_url' => $user['avatar_url']
             ];
             
         } else {

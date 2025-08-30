@@ -54,6 +54,12 @@
 								><span class="mtext">Pengguna</span>
 							</a>
 						</li>
+						<li class="dropdown">
+							<a href="<?= url_to('main') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi-file-earmark-break"></span
+								><span class="mtext">Main Page</span>
+							</a>
+						</li>
 
 					</ul>
 				</div>

@@ -181,7 +181,7 @@
 						error: function(xhr, status, error) {
 							try {
 								const response = JSON.parse(xhr.responseText);
-								alert(response.message);
+								alert("email atau password salah");
 							} catch (e) {
 								alert('An error occurred while logging in.');
 							}

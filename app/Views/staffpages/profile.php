@@ -62,20 +62,6 @@
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Role</label>
-																	<select
-																		class="selectpicker form-control form-control-lg"
-																		data-style="btn-outline-secondary btn-lg"
-																		title="Pilih Role"
-																		name="role"
-																		id="role"
-																	>
-																		<option value="admin">Admin</option>
-																		<option value="user">Users</option>
-																		<option value="buyer">Penyedia Jasa</option>
-																	</select>
-																</div>
-																<div class="form-group">
 																	<label>Alamat</label>
 																	<input
 																		class="form-control form-control-lg"
@@ -136,7 +122,6 @@
 					$('#username').val(data.username);
 					$('#email').val(data.email);
 					$('#no_handphone').val(data.no_handphone);
-					$('#role').val(data.role).change();
 					$('#alamat').val(data.alamat);
 				},
 				error: function(xhr) {
@@ -159,7 +144,7 @@
 				contentType: false,
 				success: function(response) {
 					alert(response.message);
-					window.location.href = '/admin/profile';
+					logout();
 				},
 				error: function(xhr) {
 					console.error("Error updating user data:", xhr);
