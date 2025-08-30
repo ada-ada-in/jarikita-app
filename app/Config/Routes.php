@@ -17,6 +17,7 @@
         $routes->get('lokasi', 'PagesController::lokasi', ['as' => 'lokasi']);
         $routes->get('bannerpromo', 'PagesController::bannerpromo', ['as' => 'bannerpromo']);
         $routes->get('profile', 'PagesController::profile', ['as' => 'profile']);
+        $routes->get('tanggungan', 'PagesController::tanggungan', ['as' => 'tanggungan']);
     });
 
     // seller pages
@@ -27,9 +28,11 @@
     });
 
     // staff pages
-    $routes->group('staff', static function($routes) {
+    $routes->group('staff', ['filter' => 'staff'], static function($routes) {
         $routes->get('dashboard', 'PagesController::dashboardStaff', ['as' => 'dashboardStaff']);
         $routes->get('tanggungan', 'PagesController::tanggunganStaff', ['as' => 'tanggunganStaff']);
+        $routes->get('log', 'PagesController::logStaff', ['as' => 'logStaff']);
+        $routes->get('jasa', 'PagesController::jasaStaff', ['as' => 'jasaStaff']);
     });
 
     // users pages

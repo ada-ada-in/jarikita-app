@@ -20,8 +20,20 @@
 						</li>
 						<li class="dropdown">
 							<a href="<?= url_to('tanggunganStaff') ?>" class="dropdown-toggle no-arrow">
-								<span class="micon bi bi-archive"></span
+								<span class="micon bi bi-building"></span
 								><span class="mtext">Tanggungan BPJS</span>
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="<?= url_to('logStaff') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-chat-dots"></span
+								><span class="mtext">Log Info</span>
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="<?= url_to('jasaStaff') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-archive"></span
+								><span class="mtext">Penyedia Jasa</span>
 							</a>
 						</li>	
 					</ul>

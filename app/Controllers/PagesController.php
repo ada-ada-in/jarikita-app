@@ -32,6 +32,10 @@ class PagesController extends BaseController
     {
         return view('pages/bannerpromo');
     }
+    public function tanggungan(): string 
+    {
+        return view('pages/tanggungan');
+    }
 
 
     // users
@@ -70,6 +74,12 @@ class PagesController extends BaseController
     }
     public function tanggunganStaff(): string {
         return view('staffpages/tanggungan');
+    }
+    public function logStaff(): string {
+        return view('staffpages/log');
+    }
+    public function jasaStaff(): string {
+        return view('staffpages/jasa');
     }
 
 

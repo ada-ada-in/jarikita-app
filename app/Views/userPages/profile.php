@@ -105,9 +105,9 @@
   background-clip: text; 
 }
 
-.star-rating {
+/* .star-rating {
   color: #ffc107;
-}
+} */
 
 .star-rating span {
   font-size: 1.5rem;
@@ -116,8 +116,9 @@
 }
 .star-rating span.hover,
 .star-rating span.selected {
-  color: #ffc107; /* kuning */
+  color: #ffc107;
 }
+
 
 
 
@@ -320,7 +321,7 @@
         });
       });
 
-        let selectedRating = 0;
+      let selectedRating = 0;
 
       $('#star-rating span').hover(
         function() {
@@ -337,8 +338,13 @@
       $('#star-rating span').click(function() {
         selectedRating = $(this).data('value');
         $('#rating').val(selectedRating);
+
+        $('#star-rating span').removeClass('selected');
+
         $('#star-rating span').each(function() {
-          $(this).toggleClass('selected', $(this).data('value') <= selectedRating);
+          if ($(this).data('value') <= selectedRating) {
+            $(this).addClass('selected');
+          }
         });
       });
 

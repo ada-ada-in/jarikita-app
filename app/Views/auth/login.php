@@ -169,10 +169,12 @@
 							role = response.role;
 							if( role === 'admin') {
 								window.location.href = '/admin/dashboard';
-							} else if (role === 'user') {
-								window.location.href = '/';
-							} else {
+							} else if (role === 'seller') {
 								window.location.href = '/users/dashboard';
+							} else if (role === 'staff') {
+								window.location.href = '/staff/dashboard';
+							} else {
+								window.location.href = '/';
 							}
 							
 						},

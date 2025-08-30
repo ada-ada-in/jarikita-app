@@ -23,6 +23,9 @@
                                 <input type="number" class="form-control" name="no_handphone" placeholder="Nomor Handphone" required>
                             </div>
                             <div class="col-12 mt-3">
+                                <input type="number" class="form-control" name="nopp" placeholder="No. PP" required>
+                            </div>
+                            <div class="col-12 mt-3">
                                 <input type="file" accept="image/*" class="form-control" name="image" placeholder="Photo">
                             </div>
                             <div class="col-12 mt-3">
@@ -30,7 +33,8 @@
                                     <option value="" selected disabled>Pilih Role</option>
                                     <option value="user">Users</option>
                                     <option value="admin">Admin</option>
-                                    <option value="admin">Penawar Jasa</option>
+                                    <option value="seller">Penawar Jasa</option>
+                                    <option value="staff">Staff BPJS</option>
                                 </select>
                             </div>
                             <div class="col-12 mt-3">

@@ -7,12 +7,12 @@
                     <div class="row d-flex justify-content-between ">
                             <div class="col-md-6 col-sm-12">
                                 <div class="title">
-                                    <h4>Data Jasa</h4>
+                                    <h4>Data Tanggungan BPJS</h4>
                                 </div>
                                 <nav aria-label="breadcrumb" role="navigation">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="<?= url_to('admin') ?>">Dashboard</a>
+                                            <a href="<?= url_to('dashboardStaff') ?>">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
                                          Jasa
@@ -24,7 +24,6 @@
 								<div class="form-group">
 									<input class="form-control" id="searchinput" placeholder="Cari....." type="text" />
 								</div>
-								<button class="btn btn-primary " data-toggle="modal" data-target="#addjasamodal" >+</button>
 							</div>
                         </div>
 
@@ -38,12 +37,13 @@
 									<tr>
 										<th class="table-plus datatable-nosort">No.</th>
 										<th>Nama</th>
-										<th>Nama Jasa</th>
-										<th>Discount</th>
+										<th>No. PP</th>
+										<th>Role</th>
 										<th>Email</th>
-										<th>Nomor Handphone</th>
-										<th>Lokasi</th>
+										<th>No. Handphone</th>
 										<th>Alamat</th>
+										<th>Status BPJS</th>
+										<th>Tanggal Pembayaran Terakhir</th>
 										<th class="datatable-nosort">Action</th>
 									</tr>
 								</thead>
@@ -56,8 +56,7 @@
 				</div>
 			</div>
 
-<?= view('sellerPages/modals/jasa/add-jasa-modals') ?>
-<?= view('sellerPages/modals/jasa/edit-jasa-modals') ?>
+<?= view('staffpages/modals/tanggungan/edit-tanggungan-modals') ?>
 
 <script>
     $(function () {
@@ -75,40 +74,35 @@
                 row += `
                     <tr>
                         <td class="table-plus">${start + i + 1}</td>
-                        <td>${item.username_user}</td>
-                        <td>${item.nama_jasa}</td>
-                        <td>${item.discount}</td>
-                        <td>${item.email_user}</td>
-                        <td>${item.no_handphone_user}</td>
-                        <td>${item.nama_lokasi}</td>
+                        <td>${item.username}</td>
+                        <td>${item.nopp}</td>
+                        <td>${item.role}</td>
+                        <td>${item.email}</td>
+                        <td>${item.no_handphone}</td>
                         <td>${item.alamat}</td>
+                        <td>${item.bpjs_status_pembayaran}</td>
+                        <td>${item.bpjs_pembayaran}</td>
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <button type="button" class="dropdown-item btn-edit-jasa" data-toggle="modal" data-target="#editjasamodal"
+                                    <button type="button" class="dropdown-item btn-edit-tanggungan" data-toggle="modal" data-target="#edittanggunganmodal"
                                         data-id="${item.id}"
-                                        data-user_id="${item.user_id}"
-                                        data-lokasi_id="${item.lokasi_id}"
-                                        data-deskripsi="${item.deskripsi}"
-                                        data-nama_jasa="${item.nama_jasa}"
-                                        data-discount="${item.discount}"
-                                        data-image_url="${item.image_url}"
-                                        data-nama_email_user="${item.nama_email_user}"
-                                        data-no_handphone_user="${item.no_handphone_user}"
-                                        data-nama_lokasi="${item.nama_lokasi}"
+                                        data-username="${item.username}"
+                                        data-nopp="${item.nopp}"
+                                        data-email="${item.email}"
+                                        data-no_handphone="${item.no_handphone}"
                                         data-alamat="${item.alamat}"
-                                        data-username_user="${item.username_user}">
+                                        data-bpjs_status_pembayaran="${item.bpjs_status_pembayaran}"
+                                        data-bpjs_pembayaran="${item.bpjs_pembayaran}"
+                                        >
                                         <i class="dw dw-edit2"></i> Edit
                                     </button>
                                     <button class="dropdown-item btn-delete" data-id="${item.id}">
                                         <i class="dw dw-delete-3"></i> Delete
                                     </button>
-                                    <a class="dropdown-item" href="/profile/${item.id}">
-                                        <i class="dw dw-file-3"></i> View
-                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -143,11 +137,12 @@
 
         function loadData() {
             $.ajax({
-                url: '/api/v1/layanan/users',
+                url: '/api/v1/users',
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
                     filteredData = response.data;
+                    console.log("YAYA :",  filteredData)
                     displayTable(filteredData);
                     displayPagination(filteredData.length);
                 },
@@ -158,46 +153,6 @@
         }
 
         loadData();
-
-        $('#form-add-jasa').on('submit', function (e) {
-        e.preventDefault();
-
-        const form = this;
-		const formData = new FormData(form);
-
-        $.ajax({
-            url: `/api/v1/layanan`,
-            type: 'POST',
-           data: formData,
-			processData: false,
-			contentType: false, 
-            success: function (response) {
-                alert(response.message);
-                window.location.reload();
-            },
-            error: function (xhr, status, error) {
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    let errorMessage = '';
-                    if (response.messages) {
-                        for (const key in response.messages) {
-                            errorMessage += `${response.messages[key]}\n`;
-                        }
-                    } else if (response.message) {
-                        errorMessage = response.message;
-                    } else {
-                        errorMessage = 'Terjadi kesalahan yang tidak diketahui.';
-                    }
-                    alert(errorMessage);
-                } catch (e) {
-                    console.error('Gagal parse response error:', e);
-                    alert('Terjadi kesalahan saat memproses respons error.');
-                }
-            }
-        });
-    });
-
-
 
         // Delete
 
@@ -239,20 +194,25 @@
 
         // Update
 
-        $(document).on('click', '.btn-edit-jasa', function () {
+        $(document).on('click', '.btn-edit-tanggungan', function () {
             const button = $(this);
             const id = button.data('id');
-            $('#form-edit-jasa').data('id', id);
-            $('#editjasamodal input[name="user_id"]').val(button.data('user_id'));
-            $('#editjasamodal select[name="lokasi_id"]').val(button.data('lokasi_id')).trigger('change');
-            $('#editjasamodal input[name="nama_jasa"]').val(button.data('nama_jasa'));
-            $('#editjasamodal input[name="discount"]').val(button.data('discount'));
-            $('#editjasamodal input[name="alamat"]').val(button.data('alamat'));
-            $('#editjasamodal input[name="image"]').val(button.data('image_url'));
-            $('#editjasamodal textarea[name="deskripsi"]').val(button.data('deskripsi'));
+            $('#form-edit-tanggungan').data('id', id);
+            $('#edittanggunganmodal input[name="id"]').val(button.data('id'));
+            $('#edittanggunganmodal input[name="username"]').val(button.data('username'));
+            $('#edittanggunganmodal select[name="bpjs_status_pembayaran"]').val(button.data('bpjs_status_pembayaran')).trigger('change');
+            $('#edittanggunganmodal input[name="nopp"]').val(button.data('nopp'));
+            $('#edittanggunganmodal input[name="email"]').val(button.data('email'));
+            $('#edittanggunganmodal input[name="no_handphone"]').val(button.data('no_handphone'));
+            $('#edittanggunganmodal input[name="alamat"]').val(button.data('alamat'));
+            let tanggal = button.data('bpjs_pembayaran'); 
+            if (tanggal) {
+                let fixedDate = tanggal.split(" ")[0];
+                $('#edittanggunganmodal input[name="bpjs_pembayaran"]').val(fixedDate);
+            }
         });
 
-    $('#form-edit-jasa').on('submit', function (e) {
+    $('#form-edit-tanggungan').on('submit', function (e) {
     e.preventDefault();
 
     const id = $(this).data('id'); 
@@ -261,7 +221,7 @@
     console.log("id", id);
 
     $.ajax({
-            url: `/api/v1/layanan/${id}`,
+            url: `/api/v1/users/${id}`,
             type: 'POST',
             data: formData,
             processData: false,
@@ -269,7 +229,7 @@
             success: function (response) {
                 console.log(response.data)
                 alert(response.message);
-                $('#editjasamodal').modal('hide');
+                $('#edittanggunganmodal').modal('hide');
                 loadData();
             },
             error: function (xhr) {
@@ -297,13 +257,12 @@
     $('#searchinput').on('input', function () {
         const keyword = $(this).val().toLowerCase();
         const filtered = filteredData.filter(item =>
-            item.nama_jasa.toLowerCase().includes(keyword) ||
+            item.username.toLowerCase().includes(keyword) ||
+            item.nopp.toLowerCase().includes(keyword) ||
+            item.email.toLowerCase().includes(keyword) ||
+            item.no_handphone.toLowerCase().includes(keyword) ||
             item.alamat.toLowerCase().includes(keyword) ||
-            item.deskripsi.toLowerCase().includes(keyword) ||
-            item.username_user.toLowerCase().includes(keyword) ||
-            item.email_user.toLowerCase().includes(keyword) ||
-            item.alamat_user.toLowerCase().includes(keyword) ||
-            item.nama_lokasi.toLowerCase().includes(keyword) 
+            item.bpjs_status_pembayaran.toLowerCase().includes(keyword)
         );
 
         currentPage = 1; // reset to first page

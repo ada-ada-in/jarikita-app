@@ -157,6 +157,9 @@ class UsersServices {
             'role'    => $data['role'] ?? $existingUser['role'],
             'alamat'    => $data['alamat'] ?? $existingUser['alamat'],
             'password'=> $data['password'] ?? $existingUser['password'],
+            'nopp'=> $data['nopp'] ?? $existingUser['nopp'],
+            'bpjs_status_pembayaran'=> $data['bpjs_status_pembayaran'] ?? $existingUser['bpjs_status_pembayaran'],
+            'bpjs_pembayaran'=> $data['bpjs_pembayaran'] ?? $existingUser['bpjs_pembayaran'],
         ];
 
     

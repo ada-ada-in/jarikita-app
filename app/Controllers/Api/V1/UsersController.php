@@ -110,43 +110,33 @@ class UsersController extends ResourceController {
     public function updateDataUserById($id)
     {
         try {
-            $image = $this->request->getFile('image');
             $data = $this->request->getPost();
 
-            if (!$image->isValid()) {
-                return $this->fail([
-                    'error' => 'Invalid file.',
-                    'debug' => $image->getError()
-                ], 400);
+            // ambil file
+            $image = $this->request->getFile('image');
+
+            if ($image && $image->isValid()) {
+                $imageName = $image->getRandomName();
+                $image->move(FCPATH . 'uploads/', $imageName);
+                $data['avatar_url'] = 'uploads/' . $imageName;
             }
 
-            if (!file_exists($image->getTempName())) {
-                return $this->fail([
-                    'error' => 'Temporary file missing.',
-                    'debug' => $image->getTempName()
-                ], 400);
-            }
-
-            $imageName = $image->getRandomName();
-            $image->move(FCPATH . 'uploads/', $imageName);
-    
             if (empty($data)) {
                 return $this->fail([
-                    'error' => 'No data received.', 'debug' => $this->request->getBody()
+                    'error' => 'No data received.',
+                    'debug' => $this->request->getBody()
                 ]);
             }
 
-            $data['avatar_url'] = 'uploads/' . $imageName;   
             $updatedData = $this->userServices->updateDataByUserIdServices($id, $data);
 
             session()->setFlashdata('success', 'User berhasil diupdate!');
-    
+
             return $this->respondUpdated([
                 'status'  => true,
                 'data'    => $updatedData,
                 'message' => 'Data updated successfully'
             ]);
-    
         } catch (\Exception $e) {
             return $this->fail([
                 'status'  => false,
@@ -154,6 +144,7 @@ class UsersController extends ResourceController {
             ], 500);
         }
     }
+
 
     public function countUser(){
         try{
