@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    image: php:8.3-fpm
+    container_name: ${APP_CONTAINER}
+    volumes:
+      - ./ci4:/var/www/html
+    working_dir: /var/www/html
+
+  web:
+    image: nginx:latest
+    container_name: ci4_web
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - ./ci4:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: jarikita_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
