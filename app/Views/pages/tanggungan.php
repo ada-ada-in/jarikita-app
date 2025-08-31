@@ -37,7 +37,7 @@
 									<tr>
 										<th class="table-plus datatable-nosort">No.</th>
 										<th>Nama</th>
-										<th>No. PP</th>
+										<th>NPP</th>
 										<th>Role</th>
 										<th>Email</th>
 										<th>No. Handphone</th>

@@ -1,4 +1,4 @@
-<?= $this->extend('layouth/admin_layout') ?>
+<?= $this->extend('layouth/seller_layout') ?>
 <?= $this->section('content') ?>
 
 			<div class="pd-ltr-20 xs-pd-20-10">
@@ -12,7 +12,7 @@
 								<nav aria-label="breadcrumb" role="navigation">
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item">
-											<a href="<?= url_to('admin') ?>">Dashboard</a>
+											<a href="<?= url_to('dashboardSeller') ?>">Dashboard</a>
 										</li>
 										<li class="breadcrumb-item active" aria-current="page">
 											Profile
@@ -62,26 +62,21 @@
 																	/>
 																</div>
 																<div class="form-group">
-																	<label>Role</label>
-																	<select
-																		class="selectpicker form-control form-control-lg"
-																		data-style="btn-outline-secondary btn-lg"
-																		title="Pilih Role"
-																		name="role"
-																		id="role"
-																	>
-																		<option value="admin">Admin</option>
-																		<option value="user">Users</option>
-																		<option value="buyer">Penyedia Jasa</option>
-																	</select>
-																</div>
-																<div class="form-group">
 																	<label>Alamat</label>
 																	<input
 																		class="form-control form-control-lg"
 																		type="text"
 																		name="alamat"
 																		id="alamat"
+																	/>
+																</div>
+																<div class="form-group">
+																	<label>NPP</label>
+																	<input
+																		class="form-control form-control-lg"
+																		type="number"
+																		name="nopp"
+																		id="nopp"
 																	/>
 																</div>
 																<div class="form-group">
@@ -138,6 +133,7 @@
 					$('#no_handphone').val(data.no_handphone);
 					$('#role').val(data.role).change();
 					$('#alamat').val(data.alamat);
+					$('#nopp').val(data.nopp);
 				},
 				error: function(xhr) {
 					console.error("Error fetching user data:", xhr);
@@ -159,7 +155,7 @@
 				contentType: false,
 				success: function(response) {
 					alert(response.message);
-					window.location.href = '/admin/profile';
+					logout();
 				},
 				error: function(xhr) {
 					console.error("Error updating user data:", xhr);

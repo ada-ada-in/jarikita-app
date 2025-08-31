@@ -39,6 +39,7 @@
 										<th class="table-plus datatable-nosort">No.</th>
                                         <th>Username</th>
                                         <th>Email</th>
+                                        <th>NPP</th>
                                         <th>Alamat</th>
                                         <th>Nomor Handphone</th>
                                         <th>Gambar Profile</th>
@@ -77,6 +78,7 @@
                         <td class="table-plus">${start + i + 1}</td>
                         <td>${item.username}</td>
                         <td>${item.email}</td>
+                        <td>${item.nopp}</td>
                         <td>${item.alamat}</td>
                         <td>${item.no_handphone}</td>
                         <td><img src="/${item.avatar_url}" width="80" alt="avatar" style="border-radius: 5px;" /></td>
@@ -91,6 +93,7 @@
                                         data-id="${item.id}"
                                         data-username="${item.username}"
                                         data-email="${item.email}"
+                                        data-nopp="${item.nopp}"
                                         data-alamat="${item.alamat}"
                                         data-no_handphone="${item.no_handphone}"
                                         data-avatar_url="${item.avatar_url}"
@@ -249,6 +252,7 @@
             $('#editpenggunamodal input[name="id"]').val(button.data('id'));
             $('#editpenggunamodal input[name="username"]').val(button.data('username'));
             $('#editpenggunamodal input[name="email"]').val(button.data('email'));
+            $('#editpenggunamodal input[name="nopp"]').val(button.data('nopp'));
             $('#editpenggunamodal input[name="alamat"]').val(button.data('alamat'));
             $('#editpenggunamodal input[name="no_handphone"]').val(button.data('no_handphone'));
             $('#editpenggunamodal select[name="role"]').val(button.data('role'));

@@ -179,6 +179,7 @@
                 $('#form-add-layanan')[0].reset();
                 loadData();
                 $('#addlayananmodal').modal('hide');
+                window.location.reload();
             },
             error: function (xhr, status, error) {
                 try {

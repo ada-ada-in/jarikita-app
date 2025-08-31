@@ -26,6 +26,9 @@
                                 <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
                             </div>
                             <div class="col-12 mt-3">
+                                <input type="number" class="form-control" name="discount" placeholder="Masukan Diskon | Kosongkan jika tidak ada">
+                            </div>
+                            <div class="col-12 mt-3">
                                 <input type="file" accept="image/*" class="form-control" name="image" placeholder="Photo" required>
                             </div>
                             <div class="col-12 mt-3">

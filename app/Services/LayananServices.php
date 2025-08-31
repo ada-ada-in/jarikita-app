@@ -27,10 +27,6 @@ class LayananServices {
                 'label' => 'nama_jasa',
                 'rules' => 'required'
             ],
-            'bidang_jasa'   => [
-                'label' => 'bidang_jasa',
-                'rules' => 'required'
-            ],
             'alamat'   => [
                 'label' => 'alamat',
                 'rules' => 'required'
@@ -55,7 +51,6 @@ class LayananServices {
             'user_id'    => $data['user_id'],
             'lokasi_id'       => $data['lokasi_id'],
             'nama_jasa' => $data['nama_jasa'],
-            'bidang_jasa' => $data['bidang_jasa'],
             'alamat' => $data['alamat'],
             'image_url' => $data['image_url'],
             'deskripsi' => $data['deskripsi'],

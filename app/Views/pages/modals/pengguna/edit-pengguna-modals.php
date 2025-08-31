@@ -23,7 +23,7 @@
                                 <input type="number" class="form-control" name="no_handphone" placeholder="Nomor Handphone" required>
                             </div>
                             <div class="col-12 mt-3">
-                                <input type="number" class="form-control" name="nopp" placeholder="No. PP" required>
+                                <input type="number" class="form-control" name="nopp" placeholder="NPP" required>
                             </div>
                             <div class="col-12 mt-3">
                                 <input type="file" accept="image/*" class="form-control" name="image" placeholder="Photo">

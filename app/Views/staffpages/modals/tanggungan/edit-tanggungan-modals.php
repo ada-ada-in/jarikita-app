@@ -11,19 +11,19 @@
                         <div class="row">
                             <input type="number" id="id" name="id" hidden>
                             <div class="col-12 mt-3">
-                                <input type="text" class="form-control" name="username" placeholder="Nama Pelanggan" required>
+                                <input type="text" class="form-control" name="username" placeholder="Nama Pelanggan" required disabled>
                             </div>
                             <div class="col-12 mt-3">
-                                <input type="number" class="form-control" name="nopp" placeholder="No. PP" required>
+                                <input type="number" class="form-control" name="nopp" placeholder="No. PP" required disabled>
                             </div>
                             <div class="col-12 mt-3">
-                                <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                <input type="email" class="form-control" name="email" placeholder="Email" required disabled>
                             </div>
                             <div class="col-12 mt-3">
-                                <input type="number" class="form-control" name="no_handphone" placeholder="Nomor Handphone" required>
+                                <input type="number" class="form-control" name="no_handphone" placeholder="Nomor Handphone" required disabled>
                             </div>
                             <div class="col-12 mt-3">
-                                <input type="text" class="form-control" name="alamat" placeholder="Alamat" required>
+                                <input type="text" class="form-control" name="alamat" placeholder="Alamat" required disabled>
                             </div>
                             <div class="col-12 mt-3">
                                 <select name="bpjs_status_pembayaran" id="" class="form-control">
