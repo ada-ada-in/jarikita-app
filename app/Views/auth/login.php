@@ -83,11 +83,12 @@
 										class="form-control form-control-lg"
 										placeholder="**********"
 										name="password"
+										id="passwordInput"
 									/>
 									<div class="input-group-append custom">
-										<span class="input-group-text"
-											><i class="dw dw-padlock1"></i
-										></span>
+										<span class="input-group-text" id="togglePassword" style="cursor:pointer;">
+											<i class="dw dw-padlock1"></i>
+										</span>
 									</div>
 								</div>
 								<div class="row pb-30">
@@ -201,6 +202,21 @@
 				})
 			});
 		</script>
+
+		<script>
+    const passwordInput = document.getElementById('passwordInput');
+    const togglePassword = document.getElementById('togglePassword');
+
+    togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // opsional: ganti icon
+        togglePassword.innerHTML = type === 'password'
+            ? '<i class="dw dw-padlock1"></i>'
+            : '<i class="dw dw-eye1"></i>';
+    });
+</script>
 
 		<!-- js -->
 		<script src="/assets/deskapp/vendors/scripts/core.js"></script>

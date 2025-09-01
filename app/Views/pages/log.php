@@ -290,6 +290,25 @@
             displayTable(filtered);
             displayPagination(filtered.length);
         });
+
+        // Delete
+        $(document).on('click', '.btn-delete', function () {
+            const id = $(this).data('id');
+            if (confirm('Are you sure you want to delete this log entry?')) {
+                $.ajax({
+                    url: `/api/v1/log/${id}`,
+                    type: 'DELETE',
+                    success: function (response) {
+                        alert('Log entry deleted successfully.');
+                        loadData();
+                    },
+                    error: function (error) {
+                        console.error('Error deleting log entry:', error);
+                        alert('Failed to delete log entry.');
+                    }
+                });
+            }
+        });
     });
 </script>
 

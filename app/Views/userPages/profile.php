@@ -191,6 +191,7 @@
       $.ajax({
         url: `/api/v1/layanan/${id}`,
         dataType: 'json',
+        method: "GET",
         success: function(response) {
         const data = response.data; 
         console.log(data)
@@ -214,10 +215,15 @@
             $('discount').empty();
           }
 
-          const whatsappLink = `https://api.whatsapp.com/send?phone=${data.no_handphone_user}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
-          $('#sendlog').attr('href', whatsappLink);
-          const whatsappLinkMobile = `https://api.whatsapp.com/send?phone=${data.no_handphone_user}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
-          $('#sendlogmobile').attr('href', whatsappLink);
+          let nomor = data.no_handphone_user;
+            if(nomor.startsWith("0")) {
+                nomor = "62" + nomor.substring(1);
+            }
+
+          const whatsappLink = `https://api.whatsapp.com/send?phone=${nomor}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
+          $('#sendlog').attr('href', nomor);
+          const whatsappLinkMobile = `https://api.whatsapp.com/send?phone=${nomor}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
+          $('#sendlogmobile').attr('href', nomor);
 
         },
         error: function(xhr, status, error) {
@@ -320,6 +326,42 @@
 
       // Klik kirim log
       $('#sendlog').on('click', function(e) {
+        e.preventDefault();
+
+      if(!role || role == 'undifiened' || role == 'null') {
+        window.location.href = '/auth/login';
+        return;
+      }
+      if( role !== 'user') {
+        alert('Hanya pengguna yang dapat menghubungi via whatsapp.');
+        return;
+      }
+        
+
+          const formData = {
+          email: email,
+          no_handphone: no_handphone,
+          deskripsi: deskripsi
+        };  
+
+        $.ajax({
+          url: `/api/v1/log`,
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
+          success: function(response) {
+            console.log('Log entry created:', response.message);
+            window.open($('#sendlog').attr('href'), '_blank');
+          },
+          error: function(xhr, status, error) {
+            console.error('Error creating log entry:', error);
+          }
+        });
+      });
+
+
+      $('#sendlogmobile').on('click', function(e) {
         e.preventDefault();
 
       if(!role || role == 'undifiened' || role == 'null') {
