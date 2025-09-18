@@ -1,108 +1,110 @@
-    <section class="py-3 overflow-hidden">
-      <div class="container-fluid">
+<section class="py-3 overflow-hidden">
+  <div class="container-fluid">
 
-      <div class="row my-5">
-        <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
-          <div class="carousel-inner" id="banner-list">
-           <!-- banner list -->
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+    <div class="row my-5">
+      <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
+        <div class="carousel-inner" id="banner-list">
+          <!-- banner list -->
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
+    </div>
 
-        <!-- <div class="row">
-          <div class="col-md-12">
+  </div>
+</section>
 
-            <div class="section-header d-flex flex-wrap justify-content-between">
-              <h2 class="section-title">Jenis Jasa</h2>
+<script>
+$(document).ready(function() {
 
-              <div class="d-flex align-items-center">
-                <a href="#" class="btn-link text-decoration-none">Lihat Semua Lokasi →</a>
-                <div class="swiper-buttons">
-                  <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
-                  <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12">
+  // Ambil Banner Promo
+  $.ajax({
+    url: "/api/v1/bannerpromo",
+    method: "GET",
+    dataType: "json",
+    success: function(response) {
+      const banners = response.data;
+      const bannerContainer = $('#banner-list'); // tempat carousel-inner
 
-            <div class="category-carousel swiper">
-              <div class="swiper-wrapper" id="lokasi-list">
-                
-              </div>
-            </div>
+      bannerContainer.empty();
 
-          </div>
-        </div> -->
+      // loop per 4 item → 1 slide (kolase 2x2)
+      // loop per 4 item → 1 slide
+      for (let i = 0; i < banners.length; i += 4) {
+        const isActive = i === 0 ? 'active' : '';
+        let imgs = '';
 
+        const chunk = banners.slice(i, i + 4);
 
-      </div>
-    </section>
-
-
-    <script>
-      $(document).ready(function() {
-
-        //  <div class="carousel-item active">
-        //     <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/10/Discount-Banner-Design-Template-Graphics-51400296-1.jpg" class="d-block w-100" style="height:400px; object-fit:cover;"  alt="...">
-        //   </div>
-
-        $.ajax({
-          url: "/api/v1/bannerpromo",
-          method: "GET",
-          dataType: "json",
-          success: function(response) {
-            const bannerList = response.data;
-            console.log(bannerList);
-            const bannerContainer = $('#banner-list');
-            bannerList.forEach(function(banner, index) {
-              const isActive = index === 0 ? 'active' : '';
-              const bannerItem = `
-                <div class="carousel-item ${isActive}">
-                  <img src="${banner.image_link}" class="d-block w-100" style="height:400px; object-fit:cover;"  alt="...">
-                </div>
-              `;
-              bannerContainer.append(bannerItem);
-            });
-          },
-          error: function(xhr) {
-            console.error("Error fetching banner data:", xhr);
-          }
-        })
-
-        $.ajax({
-          url: "/api/v1/lokasi",
-          method: "GET",
-          dataType: "json",
-          success: function(response) {
-            const lokasiList = response.data;
-            console.log(lokasiList);
-            const lokasiContainer = $('#lokasi-list');
-            lokasiList.forEach(function(lokasi) {
-              const lokasiItem = `
-                <a href="/lokasi/${lokasi.id}" class="nav-link category-item swiper-slide">
-                  <img src="/template/images/google-maps.png" width="50" alt="Category Thumbnail">
-                  <h3 class="category-title">${lokasi.lokasi}</h3>
-                </a>
-              `;
-              lokasiContainer.append(lokasiItem);
-            });
-          },
-          error: function(xhr) {
-            console.error("Error fetching lokasi data:", xhr);
-          }
+        chunk.forEach(banner => {
+          imgs += `
+            <img src="${banner.image_link}" 
+                style="width:100%; height:100%; object-fit:contain; background:#f8f9fa;" 
+                alt="">
+          `;
         });
+
+        // kalau kurang dari 4, tambahin placeholder biar grid tetap rapat
+        if (chunk.length < 4) {
+          for (let j = chunk.length; j < 4; j++) {
+            imgs += `
+              <div style="width:100%; height:100%; background:#f0f0f0;"></div>
+            `;
+          }
+        }
+
+        const bannerItem = `
+          <div class="carousel-item ${isActive}">
+            <div style="
+                height:400px; 
+                display:grid; 
+                grid-template-columns: repeat(2, 1fr); 
+                gap:10px; 
+                background:#fff; 
+                padding:10px;">
+              ${imgs}
+            </div>
+          </div>
+        `;
+
+        bannerContainer.append(bannerItem);
+      }
+
+    },
+    error: function(xhr) {
+      console.error("Error fetching banner data:", xhr);
+    }
+  });
+
+  // Ambil Lokasi
+  $.ajax({
+    url: "/api/v1/lokasi",
+    method: "GET",
+    dataType: "json",
+    success: function(response) {
+      const lokasiList = response.data;
+      console.log(lokasiList);
+      const lokasiContainer = $('#lokasi-list');
+      lokasiList.forEach(function(lokasi) {
+        const lokasiItem = `
+          <a href="/lokasi/${lokasi.id}" class="nav-link category-item swiper-slide">
+            <img src="/template/images/google-maps.png" width="50" alt="Category Thumbnail">
+            <h3 class="category-title">${lokasi.lokasi}</h3>
+          </a>
+        `;
+        lokasiContainer.append(lokasiItem);
       });
-    </script>
+    },
+    error: function(xhr) {
+      console.error("Error fetching lokasi data:", xhr);
+    }
+  });
+
+});
+</script>

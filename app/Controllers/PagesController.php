@@ -55,6 +55,10 @@ class PagesController extends BaseController
     {
         return view('userPages/userprofile');
     }
+    public function selectrole(): string
+    {
+        return view('userPages/selectrole');
+    }
 
     // seller
     public function dashboardSeller(): string
@@ -95,5 +99,8 @@ class PagesController extends BaseController
     }
     public function register(): string {
         return view('auth/register');
+    }
+    public function userregister(): string {
+        return view('auth/userregister');
     }
 }

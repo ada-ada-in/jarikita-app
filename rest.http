@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
     "username": "admin",
-    "email": "admin@example.com",
+    "email": "admin@jarikita.com",
     "alamat": "123 Main St",
     "no_handphone": "123456789101112",
     "avatar_url": "http://example.com/avatar.jpg",

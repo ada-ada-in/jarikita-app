@@ -79,19 +79,6 @@
 								</div>
                                 <div class="input-group custom">
 									<input
-										type="number"
-										class="form-control form-control-lg"
-										placeholder="NPP"
-										name="nopp"
-									/>
-									<div class="input-group-append custom">
-										<span class="input-group-text"
-											><i class="icon-copy dw dw-file"></i
-										></span>
-									</div>
-								</div>
-                                <div class="input-group custom">
-									<input
 										type="text"
 										class="form-control form-control-lg"
 										placeholder="Email"
@@ -129,10 +116,7 @@
 										></span>
 									</div>
 								</div>
-								<input type="text" name="role" value="seller" hidden>
-                                <div class="input-group custom">
-									<input type="file" accept="image/*" class="form-control" name="image" placeholder="Photo" required>
-								</div>
+								<input type="text" name="role" value="user" hidden>
 								<!-- Password -->
                                     <div class="input-group custom">
                                         <input
@@ -164,6 +148,7 @@
                                             </span>
                                         </div>
                                     </div>
+
 								<div class="row">
 									<div class="col-sm-12">
 										<div class="input-group mb-0">

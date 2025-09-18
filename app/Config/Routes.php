@@ -40,6 +40,7 @@
     $routes->group('/', static function($routes){
         $routes->get('', 'PagesController::main', ['as' => 'main']);
         $routes->get('userprofile', 'PagesController::userprofile', ['as' => 'userprofile']);
+        $routes->get('selectrole', 'PagesController::selectrole', ['as' => 'selectrole']);
         $routes->get('profile/(:num)', 'PagesController::profilejasa/$ ', ['as' => 'profilejasa']);
         $routes->get('lokasi/(:num)', 'PagesController::lokasijasa/$1', ['as' => 'lokasijasa']);
     });
@@ -49,6 +50,7 @@
     $routes->group('auth', static function($routes){
         $routes->get('login', 'PagesController::login', ['as' => 'login']);
         $routes->get('register', 'PagesController::register', ['as' => 'register']);
+        $routes->get('userregister', 'PagesController::userregister', ['as' => 'userregister']);
     });
     
 

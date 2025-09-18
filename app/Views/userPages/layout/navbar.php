@@ -150,7 +150,7 @@
               </div>
 
                 <?php else: ?>
-                <li class="nav-item ms-2"><a style="color: #1b3cde; border-color: #1b3cde;" class="nav-link border bg-white rounded px-3 py-1" href="/auth/register">Sign Up</a></li>
+                <li class="nav-item ms-2"><a style="color: #1b3cde; border-color: #1b3cde;" class="nav-link border bg-white rounded px-3 py-1" href="/selectrole">Sign Up</a></li>
                 <li class="nav-item ms-2"><a style="color: #1b3cde; background-color: #1b3cde; border-color: #1b3cde;" class="nav-link border border-primary text-white rounded px-3 py-1" href="/auth/login">Login</a></li>
                 <?php endif; ?>
               </ul>
