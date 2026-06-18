@@ -73,10 +73,22 @@
         <nav class="navbar navbar-expand-lg justify-content-end">
 
           <!-- Mobile Toggle Button -->
-          <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+
+          <div class="row d-md-none align-items-center my-2">
+          <div class="col-10">
+            <img src="/template/images/banner.jpg" 
+                style="width: 100%; height: 60px; object-fit: cover; border-radius: 6px;">
+          </div>
+          <div class="col-2 d-flex justify-content-end">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+        </div>
+
+            
+
 
           <!-- Offcanvas Menu (Mobile) -->
           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -114,12 +126,24 @@
                 
 
                 <?php if (session()->get('isLoggedIn')): ?>
+                <a href="<?= base_url('/chat') ?>" class="btn btn-outline-primary w-100 d-block d-lg-none text-center mb-2">
+                  Pesan
+                </a>
                 <a  id="logoutmobile" onclick="logout()" style="background-color: red; color: white;" class=" my-2 text-danger btn btn-danger w-100 d-block d-lg-none text-center hover-text-danger">
                   Logout
                 </a>
 
 
               <!-- DESKTOP: Dropdown user -->
+              <div class="d-none d-lg-flex align-items-center gap-2 me-3">
+                <a href="<?= base_url('/chat') ?>" class="btn btn-sm btn-outline-primary position-relative">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+                    <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                    <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zM8 1c5.052 0 9 2.954 9 6s-3.948 6-9 6c-1.347 0-2.621-.244-3.807-.732a.27.27 0 0 0-.229-.005c-.816.394-1.826.742-3.259.866a10.147 10.147 0 0 0 .5-1.882c.134-.611.223-1.268.223-1.886C1.528 7.716 3.329 5.05 5.687 3.456A6.201 6.201 0 0 1 8 1z"/>
+                  </svg>
+                  Pesan
+                </a>
+              </div>
               <div class="dropdown d-none d-lg-block">
                 <a href="#" class="nav-link dropdown-toggle text-black d-flex align-items-center" id="userDropdown"
                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -145,6 +169,7 @@
                   <li><a class="dropdown-item" href="<?= base_url('/userprofile') ?>">Profile</a></li>
                    <?php endif; ?>
                   <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="<?= base_url('/chat') ?>">Pesan</a></li>
                   <li><a class="dropdown-item" style="color: red;" id="logout" onclick="logout()">Logout</a></li>
                 </ul>
               </div>

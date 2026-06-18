@@ -92,6 +92,24 @@ class PagesController extends BaseController
     }
 
 
+    // chat - user
+    public function chat(): string
+    {
+        return view('chat/userChat');
+    }
+
+    // chat - seller
+    public function chatSeller(): string
+    {
+        return view('chat/sellerChat');
+    }
+
+    // chat - admin
+    public function chatAdmin(): string
+    {
+        return view('chat/adminChat');
+    }
+
     // auth
     public function login(): string
     {

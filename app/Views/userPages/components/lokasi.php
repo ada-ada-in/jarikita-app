@@ -36,45 +36,45 @@ $(document).ready(function() {
 
       // loop per 4 item → 1 slide (kolase 2x2)
       // loop per 4 item → 1 slide
-      for (let i = 0; i < banners.length; i += 4) {
-        const isActive = i === 0 ? 'active' : '';
-        let imgs = '';
+    for (let i = 0; i < banners.length; i += 4) {
+      const isActive = i === 0 ? 'active' : '';
+      let imgs = '';
 
-        const chunk = banners.slice(i, i + 4);
+      const chunk = banners.slice(i, i + 4);
 
-        chunk.forEach(banner => {
-          imgs += `
-            <img src="${banner.image_link}" 
-                style="width:100%; height:100%; object-fit:contain; background:#f8f9fa;" 
-                alt="">
-          `;
-        });
-
-        // kalau kurang dari 4, tambahin placeholder biar grid tetap rapat
-        if (chunk.length < 4) {
-          for (let j = chunk.length; j < 4; j++) {
-            imgs += `
-              <div style="width:100%; height:100%; background:#f0f0f0;"></div>
-            `;
-          }
-        }
-
-        const bannerItem = `
-          <div class="carousel-item ${isActive}">
-            <div style="
-                height:400px; 
-                display:grid; 
-                grid-template-columns: repeat(2, 1fr); 
-                gap:10px; 
-                background:#fff; 
-                padding:10px;">
-              ${imgs}
-            </div>
-          </div>
+      chunk.forEach(banner => {
+        imgs += `
+          <img src="${banner.image_link}" 
+              style="width:100%; height:100%; object-fit:contain; background:#f8f9fa;" 
+              alt="">
         `;
+      });
 
-        bannerContainer.append(bannerItem);
+      // kalau kurang dari 4, tambahin placeholder biar grid tetap rapat
+      if (chunk.length < 4) {
+        for (let j = chunk.length; j < 4; j++) {
+          imgs += `
+            <div style="width:100%; height:100%; background:#f0f0f0;"></div>
+          `;
+        }
       }
+
+      const bannerItem = `
+        <div class="carousel-item ${isActive}">
+          <div style="
+              height:400px; 
+              display:grid; 
+              grid-template-columns: repeat(2, 1fr); 
+              gap:10px; 
+              background:#fff; 
+              padding:10px;">
+            ${imgs}
+          </div>
+        </div>
+      `;
+
+      bannerContainer.append(bannerItem);
+    }
 
     },
     error: function(xhr) {

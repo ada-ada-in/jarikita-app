@@ -17,3 +17,24 @@ style="display: none; visibility: hidden"
 	></iframe
 ></noscript>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+function updateUnreadCount() {
+    $.ajax({
+        url: '<?= base_url('/api/v1/chat/unread') ?>',
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+            if (res.status && res.data > 0) {
+                $('#chatUnreadBadge').text(res.data).show();
+            } else {
+                $('#chatUnreadBadge').hide();
+            }
+        }
+    });
+}
+$(document).ready(function() {
+    updateUnreadCount();
+    setInterval(updateUnreadCount, 10000);
+});
+</script>

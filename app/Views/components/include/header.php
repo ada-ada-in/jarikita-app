@@ -7,6 +7,13 @@
 				></div> -->
 			</div>
 			<div class="header-right">
+				<div class="user-notification">
+					<div class="dropdown">
+						<a class="dropdown-toggle no-arrow" href="<?= url_to('chatAdmin') ?>">
+							<i class="dw dw-chat3"></i>
+						</a>
+					</div>
+				</div>
 				<div class="dashboard-setting user-notification">
 					<div class="dropdown">
 						<a

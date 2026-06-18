@@ -49,6 +49,12 @@
 							</a>
 						</li>
 						<li class="dropdown">
+							<a href="<?= url_to('chatAdmin') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-chat-dots-fill"></span
+								><span class="mtext">Live Chat</span>
+							</a>
+						</li>
+						<li class="dropdown">
 							<a href="<?= url_to('pengguna') ?>" class="dropdown-toggle no-arrow">
 								<span class="micon dw dw-user1"></span
 								><span class="mtext">Pengguna</span>

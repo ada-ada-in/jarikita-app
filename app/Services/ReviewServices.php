@@ -109,10 +109,7 @@ class ReviewServices {
         ->orderBy('created_at', 'DESC')->findAll();
 
         if(empty($data)){
-            return [
-                'status'  => true,
-                'message' => 'data is empty'
-            ];
+            return [];
         }
 
         return $data;

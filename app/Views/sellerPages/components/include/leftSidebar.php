@@ -25,6 +25,12 @@
 							</a>
 						</li>
 						<li class="dropdown">
+							<a href="<?= url_to('chatSeller') ?>" class="dropdown-toggle no-arrow">
+								<span class="micon bi bi-chat-dots-fill"></span
+								><span class="mtext">Pesan <span id="chatUnreadBadge" class="badge badge-danger" style="display:none; font-size: 10px; margin-left: 5px;"></span></span>
+							</a>
+						</li>
+						<li class="dropdown">
 							<a href="<?= url_to('main') ?>" class="dropdown-toggle no-arrow">
 								<span class="micon bi-file-earmark-break"></span
 								><span class="mtext">Main Page</span>

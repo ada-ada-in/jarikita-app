@@ -16,6 +16,9 @@
       <a id="sendlog" href="#" class="btn btn-gradient btn-lg shadow d-none d-md-inline-block">
         <i class="fas fa-phone" id="username"></i> Whatsapp
       </a>
+      <button id="startChatBtn" class="btn btn-outline-primary btn-lg shadow d-none d-md-inline-block ms-2" onclick="startChat()">
+        <i class="bi bi-chat-dots"></i> Chat
+      </button>
     </div>
     <div class="col-md-6 text-center position-relative">
       <p id="diskon"></p>
@@ -35,6 +38,9 @@
       <a id="sendlogmobile" href="#" class="btn btn-gradient btn-lg shadow d-inline-block d-md-none">
         <i class="fas fa-phone" id="username"></i> Whatsapp
       </a>
+      <button id="startChatBtnMobile" class="btn btn-outline-primary btn-lg shadow d-inline-block d-md-none ms-2" onclick="startChat()">
+        <i class="bi bi-chat-dots"></i> Chat
+      </button>
     </div>
   </div>
 
@@ -199,6 +205,8 @@
         deskripsi = `pengguna dengan nama ${username} melakukan penawaran dengan jasa ${namaJasa}`;
 
 
+          providerUserId = data.user_id;
+          layananId = data.id;
           $('#nama_jasa').text(data.nama_jasa);
           $('#deksripsi').text(data.deskripsi);
           $('#username').text(data.username);
@@ -329,7 +337,7 @@
         e.preventDefault();
 
       if(!role || role == 'undifiened' || role == 'null') {
-        window.location.href = '/auth/login';
+        window.location.href = '<?= base_url('/auth/login') ?>';
         return;
       }
       if( role !== 'user') {
@@ -337,7 +345,7 @@
         return;
       }
         
-
+ 
           const formData = {
           email: email,
           no_handphone: no_handphone,
@@ -345,7 +353,7 @@
         };  
 
         $.ajax({
-          url: `/api/v1/log`,
+          url: '<?= base_url('/api/v1/log') ?>',
           type: 'POST',
           dataType: 'json',
           contentType: 'application/json',
@@ -361,11 +369,44 @@
       });
 
 
-      $('#sendlogmobile').on('click', function(e) {
+      let providerUserId = null;
+      let layananId = null;
+
+      window.startChat = function() {
+        const role = '<?= session()->get('role') ?>';
+        if (!role || role === 'undifiened' || role === 'null') {
+          window.location.href = '<?= base_url('/auth/login') ?>';
+          return;
+        }
+        if (role !== 'user') {
+          alert('Hanya pengguna yang dapat memulai chat.');
+          return;
+        }
+        if (!providerUserId) {
+          alert('Data penyedia jasa belum dimuat.');
+          return;
+        }
+        $.ajax({
+          url: '<?= base_url('/api/v1/chat/start') ?>',
+          type: 'POST',
+          dataType: 'json',
+          data: { receiver_id: providerUserId, layanan_id: layananId },
+          success: function(res) {
+            if (res.status && res.data) {
+              window.location.href = '<?= base_url('/chat') ?>/' + res.data.id;
+            }
+          },
+          error: function() {
+            alert('Gagal memulai chat. Silakan coba lagi.');
+          }
+        });
+      }
+
+       $('#sendlogmobile').on('click', function(e) {
         e.preventDefault();
 
       if(!role || role == 'undifiened' || role == 'null') {
-        window.location.href = '/auth/login';
+        window.location.href = '<?= base_url('/auth/login') ?>';
         return;
       }
       if( role !== 'user') {
@@ -428,7 +469,7 @@
         e.preventDefault();
         
         if (role === 'undifiened' || role === 'null' || !role) {
-          window.location.href = '/auth/login';
+          window.location.href = '<?= base_url('/auth/login') ?>';
           return;
         }
         

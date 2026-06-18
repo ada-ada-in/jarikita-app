@@ -18,6 +18,7 @@
         $routes->get('bannerpromo', 'PagesController::bannerpromo', ['as' => 'bannerpromo']);
         $routes->get('profile', 'PagesController::profile', ['as' => 'profile']);
         $routes->get('tanggungan', 'PagesController::tanggungan', ['as' => 'tanggungan']);
+        $routes->get('chat', 'PagesController::chatAdmin', ['as' => 'chatAdmin']);
     });
 
     // seller pages
@@ -25,6 +26,8 @@
         $routes->get('dashboard', 'PagesController::dashboardSeller', ['as' => 'dashboardSeller']);
         $routes->get('jasa', 'PagesController::jasaSeller', ['as' => 'jasaSeller']);
         $routes->get('profile', 'PagesController::profileSeller', ['as' => 'profileSeller']);
+        $routes->get('chat', 'PagesController::chatSeller', ['as' => 'chatSeller']);
+        $routes->get('chat/(:num)', 'PagesController::chatSeller/$1', ['as' => 'chatSellerRoom']);
     });
 
     // staff pages
@@ -41,8 +44,10 @@
         $routes->get('', 'PagesController::main', ['as' => 'main']);
         $routes->get('userprofile', 'PagesController::userprofile', ['as' => 'userprofile']);
         $routes->get('selectrole', 'PagesController::selectrole', ['as' => 'selectrole']);
-        $routes->get('profile/(:num)', 'PagesController::profilejasa/$ ', ['as' => 'profilejasa']);
+        $routes->get('profile/(:num)', 'PagesController::profilejasa/$1', ['as' => 'profilejasa']);
         $routes->get('lokasi/(:num)', 'PagesController::lokasijasa/$1', ['as' => 'lokasijasa']);
+        $routes->get('chat', 'PagesController::chat', ['as' => 'chat']);
+        $routes->get('chat/(:num)', 'PagesController::chat/$1', ['as' => 'chatRoom']);
     });
 
 
@@ -124,6 +129,15 @@
             $routes->get('(:num)', 'Api\V1\JenisJasaController::getDataJenisJasaById/$1', ['as' => 'api.jenisjasa.getDataJenisJasaById']);
             $routes->delete('(:num)', 'Api\V1\JenisJasaController::deleteDataJenisJasaById/$1', ['as' => 'api.jenisjasa.deleteDataJenisJasaById']);
             $routes->post('(:num)', 'Api\V1\JenisJasaController::updateDataJenisJasaById/$1', ['as' => 'api.jenisjasa.updateDataJenisJasaById']);
+        });
+
+         $routes->group('chat', static function($routes) {
+            $routes->post('start', 'Api\V1\ChatController::startConversation', ['as' => 'api.chat.start']);
+            $routes->post('send', 'Api\V1\ChatController::sendMessage', ['as' => 'api.chat.send']);
+            $routes->get('conversations', 'Api\V1\ChatController::getConversations', ['as' => 'api.chat.conversations']);
+            $routes->get('messages/(:num)', 'Api\V1\ChatController::getMessages/$1', ['as' => 'api.chat.messages']);
+            $routes->post('close/(:num)', 'Api\V1\ChatController::closeConversation/$1', ['as' => 'api.chat.close']);
+            $routes->get('unread', 'Api\V1\ChatController::unreadCount', ['as' => 'api.chat.unread']);
         });
 
          $routes->group('bannerpromo', static function($routes) {
