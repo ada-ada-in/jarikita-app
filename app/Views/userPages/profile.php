@@ -229,9 +229,9 @@
             }
 
           const whatsappLink = `https://api.whatsapp.com/send?phone=${nomor}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
-          $('#sendlog').attr('href', nomor);
+          $('#sendlog').attr('href', whatsappLink);
           const whatsappLinkMobile = `https://api.whatsapp.com/send?phone=${nomor}&text=Halo, saya ${username} ingin menanyakan tentang layanan ${namaJasa}.`;
-          $('#sendlogmobile').attr('href', nomor);
+          $('#sendlogmobile').attr('href', whatsappLinkMobile);
 
         },
         error: function(xhr, status, error) {
@@ -429,7 +429,7 @@
           data: JSON.stringify(formData),
           success: function(response) {
             console.log('Log entry created:', response.message);
-            window.open($('#sendlog').attr('href'), '_blank');
+            window.open($('#sendlogmobile').attr('href'), '_blank');
           },
           error: function(xhr, status, error) {
             console.error('Error creating log entry:', error);

@@ -19,30 +19,19 @@ class AuthController extends ResourceController {
             $image = $this->request->getFile('image');
             $data = $this->request->getPost();
 
-            if (!$image->isValid()) {
-                return $this->fail([
-                    'error' => 'Invalid file.',
-                    'debug' => $image->getError()
-                ], 400);
+            $imageName = null;
+            if ($image !== null && $image->isValid() && file_exists($image->getTempName())) {
+                $imageName = $image->getRandomName();
+                $image->move(FCPATH . 'uploads/', $imageName);
             }
 
-            if (!file_exists($image->getTempName())) {
-                return $this->fail([
-                    'error' => 'Temporary file missing.',
-                    'debug' => $image->getTempName()
-                ], 400);
-            }
-
-            $imageName = $image->getRandomName();
-            $image->move(FCPATH . 'uploads/', $imageName);
-    
             if (empty($data)) {
                 return $this->fail([
                     'error' => 'No data received.', 'debug' => $this->request->getBody()
                 ]);
             }
 
-            $data['avatar_url'] = 'uploads/' . $imageName;            
+            $data['avatar_url'] = $imageName ? 'uploads/' . $imageName : null;
             $result = $this->registerServices->registerServices($data);
         
             if ($result['status'] == false) {
